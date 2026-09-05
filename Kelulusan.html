@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKD STATUS VERIFICATION // PENGUMUMAN KELULUSAN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --surface: #0b1329;
+            --surface-glass: rgba(11, 19, 41, 0.85);
+            --primary: #38bdf8;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --danger: #f87171;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.4);
+            --border-accent: rgba(251, 191, 36, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Latar Belakang Grid & Efek Scanlines */
+        .cyber-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -3;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: -2;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            top: -150px;
+            left: -150px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header / Navbar */
+        header {
+            background: var(--surface-glass);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .logo img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px var(--primary));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        /* Konten Utama */
+        main {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .verify-card {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-accent);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+
+        .verify-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary), var(--secondary));
+        }
+
+        .verify-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .verify-card h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .verify-card h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+
+        .verify-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .input-group input {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(2, 6, 23, 0.8);
+            border: 1px solid var(--border-glow);
+            padding: 14px 20px;
+            border-radius: 12px;
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .btn-verify {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, var(--accent), #d97706);
+            color: #020617;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+        }
+
+        .btn-verify:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .hint-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* Area Hasil Kelulusan */
+        .result-container {
+            display: none;
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInResult 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInResult {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-status-box {
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Varian Warna Status */
+        .result-status-box.passed {
+            background: rgba(52, 211, 153, 0.1);
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 30px rgba(52, 211, 153, 0.2);
+        }
+
+        .result-status-box.conditional {
+            background: rgba(251, 191, 36, 0.1);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+        }
+
+        .result-status-box.failed {
+            background: rgba(248, 113, 113, 0.1);
+            border: 2px solid var(--danger);
+            box-shadow: 0 0 30px rgba(248, 113, 113, 0.2);
+        }
+
+        .result-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .passed .result-title { color: var(--secondary); text-shadow: 0 0 10px rgba(52, 211, 153, 0.5); }
+        .conditional .result-title { color: var(--accent); text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+        .failed .result-title { color: var(--danger); text-shadow: 0 0 10px rgba(248, 113, 113, 0.5); }
+
+        .participant-details {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            line-height: 1.6;
+            text-align: left;
+            background: rgba(2, 6, 23, 0.4);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .participant-details span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .certificate-download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--surface);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .certificate-download-btn:hover {
+            background: var(--secondary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+        }
+
+        .action-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-cyber-back {
+            font-family: 'Orbitron', sans-serif;
+            background: var(--surface);
+            color: var(--primary);
+            border: 1px solid var(--border-glow);
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-cyber-back:hover {
+            background: var(--primary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.5px;
+            background: rgba(2, 6, 23, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+    <div class="scanlines"></div>
+    <div class="glow-orb"></div>
+
+    <header>
+        <div class="logo">
+            <!-- Ubah src="logo.png" sesuai lokasi dan nama file logo Anda -->
+            <img src="aset/Pp Mabit.png" alt="Logo PKD"> 
+            PKD VERIFICATION SYSTEM
+        </div>
+        <ul class="nav-links"></ul>
+    </header>
+
+    <main>
+        <div class="verify-card">
+            <span class="verify-badge">// OFFICIAL ENCRYPTED RESULT 2026</span>
+            <h1>CEK STATUS <span>KELULUSAN RESMI</span></h1>
+            <p>Masukkan Nama Lengkap atau Nama Panggilan Anda untuk memverifikasi status kelulusan secara instan.</p>
+
+            <div class="input-group">
+                <input type="text" id="participantName" placeholder="CONTOH: Reyan / Salwa" autocomplete="off" onkeypress="handleKeyPress(event)">
+                <button class="btn-verify" onclick="checkStatus()">
+                    <i class="fa-solid fa-magnifying-glass"></i> CEK STATUS
+                </button>
+            </div>
+            <div class="hint-text">💡 Tips: Anda cukup mengetikkan **nama depan/panggilan** (Cth: <b style="color:var(--accent);">Reyan</b>)</div>
+
+            <!-- AREA HASIL VERIFIKASI -->
+            <div class="result-container" id="resultContainer">
+                <div class="result-status-box" id="statusBox">
+                    <div class="result-title" id="resultTitle">STATUS KELULUSAN</div>
+                    <div class="participant-details" id="resultDetails">
+                        Nama: <span id="resName">-</span><br>
+                        Nomor Peserta: <span id="resId">-</span><br>
+                        Kelompok Komando: <span id="resGroup">-</span>
+                    </div>
+                    <div id="actionAreaExtra"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <a href="index.html" class="btn-cyber-back" onclick="playClickSound()">
+                <i class="fa-solid fa-arrow-left"></i> KEMBALI KE DASHBOARD
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 RANGGA ASH RAFFY JANNUARTA.
+    </footer>
+
+    <script>
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playClickSound() {
+            try {
+                initAudio();
+                let now = audioCtx.currentTime;
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.setValueAtTime(900, now + 0.1);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } catch(e) {}
+        }
+
+        function playSuccessSound() {
+            try {
+                initAudio();
+                let now = audioCtx.currentTime;
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.15);
+                osc.frequency.setValueAtTime(783.99, now + 0.3);
+                osc.frequency.setValueAtTime(1046.50, now + 0.45);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.8);
+            } catch(e) {}
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                checkStatus();
+            }
+        }
+
+        // DATABASE PESERTA
+        const databasePeserta = [
+            { name: "M. Reyanullah", id: "PKD-2026-001", group: "Kelompok 01", status: "passed", message: "Selamat! Anda dinyatakan LULUS dengan predikat Istimewa." },
+            { name: "Rizki Al-Muiz", id: "PKD-2026-002", group: "Kelompok 01", status: "passed", message: "Selamat! Anda dinyatakan LULUS penuh." },
+            { name: "Najmi Syahru Shiyam", id: "PKD-2026-003", group: "Kelompok 01", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Shohibul Wafi", id: "PKD-2026-004", group: "Kelompok 02", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Shohibul Wafa", id: "PKD-2026-005", group: "Kelompok 02", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Arif Faturrahman", id: "PKD-2026-006", group: "Kelompok 02", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "M. Tiyas Syarifatulllah", id: "PKD-2026-007", group: "Kelompok 03", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Titan Nibras S.", id: "PKD-2026-008", group: "Kelompok 03", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Salwa", id: "PKD-2026-009", group: "Kelompok 03", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Mufhiyatus Sa'adah", id: "PKD-2026-010", group: "Kelompok 04", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Rodini Putri Zamroni", id: "PKD-2026-011", group: "Kelompok 04", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Kayla Nur Azizah", id: "PKD-2026-012", group: "Kelompok 04", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Silvi Awalia Gumilar", id: "PKD-2026-013", group: "Kelompok 05", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Rahma Zahwa", id: "PKD-2026-014", group: "Kelompok 05", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Siti Nuravni", id: "PKD-2026-015", group: "Kelompok 05", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Agis Nur Zahra", id: "PKD-2026-016", group: "Kelompok 06", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Nur Luthfi Azzahra", id: "PKD-2026-017", group: "Kelompok 06", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Gazella Azharina J.", id: "PKD-2026-018", group: "Kelompok 06", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Laura Adelsia", id: "PKD-2026-019", group: "Kelompok 07", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "Siti Chairun Nisa", id: "PKD-2026-020", group: "Kelompok 07", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
+            { name: "M. Firdan", id: "PKD-2026-021", group: "Kelompok 07", status: "conditional", message: "Anda dinyatakan LULUS BERSYARAT. Harap melengkapi tugas susulan." },
+            { name: "Mohamad Rizki S.", id: "PKD-2026-022", group: "Kelompok 08", status: "conditional", message: "Anda dinyatakan LULUS BERSYARAT. Harap melengkapi tugas susulan." },
+            { name: "Galang Permana", id: "PKD-2026-023", group: "Kelompok 08", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." },
+            { name: "Fathi Aji", id: "PKD-2026-024", group: "Kelompok 08", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." },
+            { name: "Tengku Muhammad Amar", id: "PKD-2026-025", group: "Kelompok 09", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." },
+            { name: "Fauzul Akbar", id: "PKD-2026-026", group: "Kelompok 09", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." },
+            { name: "Zulhan Yahya", id: "PKD-2026-027", group: "Kelompok 09", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." }
+        ];
+
+        function checkStatus() {
+            playClickSound();
+            const inputVal = document.getElementById('participantName').value.trim().toLowerCase();
+            const resultContainer = document.getElementById('resultContainer');
+            const statusBox = document.getElementById('statusBox');
+            const resultTitle = document.getElementById('resultTitle');
+            const resName = document.getElementById('resName');
+            const resId = document.getElementById('resId');
+            const resGroup = document.getElementById('resGroup');
+            const actionAreaExtra = document.getElementById('actionAreaExtra');
+
+            if (!inputVal) {
+                alert("Harap masukkan Nama terlebih dahulu!");
+                return;
+            }
+
+            resultContainer.style.display = 'block';
+
+            let data = databasePeserta.find(p => p.name.toLowerCase().includes(inputVal));
+            
+            if (!data) {
+                statusBox.className = "result-status-box failed";
+                resultTitle.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> NAMA TIDAK DITEMUKAN';
+                resName.innerText = document.getElementById('participantName').value;
+                resId.innerText = "-";
+                resGroup.innerText = "-";
+                actionAreaExtra.innerHTML = `<p style="color:var(--danger); margin-top:15px; font-weight:600;">Nama tidak terdaftar. Pastikan ejaan nama atau panggilan Anda benar.</p>`;
+                return;
+            }
+
+            resName.innerText = data.name;
+            resId.innerText = data.id;
+            resGroup.innerText = data.group;
+
+            if (data.status === "passed") {
+                playSuccessSound();
+                statusBox.className = "result-status-box passed";
+                resultTitle.innerHTML = '<i class="fa-solid fa-circle-check"></i> STATUS: LULUS (VERIFIED)';
+                actionAreaExtra.innerHTML = `
+                    <p style="color:var(--secondary); margin-bottom:15px; font-weight:600;">${data.message}</p>
+                    <a href="https://drive.google.com" target="_blank" class="certificate-download-btn">
+                        <i class="fa-solid fa-download"></i> DOWNLOAD SK KELULUSAN & SERTIFIKAT
+                    </a>
+                `;
+            } else if (data.status === "conditional") {
+                playSuccessSound();
+                statusBox.className = "result-status-box conditional";
+                resultTitle.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> STATUS: LULUS BERSYARAT';
+                actionAreaExtra.innerHTML = `
+                    <p style="color:var(--accent); margin-bottom:15px; font-weight:600;">${data.message}</p>
+                    <a href="https://drive.google.com" target="_blank" class="certificate-download-btn" style="color:var(--accent); border-color:var(--accent);">
+                        <i class="fa-solid fa-file-lines"></i> LIHAT INSTRUKSI KETENTUAN BERSYARAT
+                    </a>
+                `;
+            } else {
+                statusBox.className = "result-status-box failed";
+                resultTitle.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> STATUS: BELUM LULUS';
+                actionAreaExtra.innerHTML = `
+                    <p style="color:var(--danger); margin-top:15px; font-weight:600;">${data.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

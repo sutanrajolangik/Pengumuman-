@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKD Cyber Command // Dynamic Core Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #010409;
+            --primary: #38bdf8;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Latar Belakang Bergerak (Grid Bergeser) */
+        .cyber-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -3;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+        /* Efek Cahaya Bergerak */
+        .hero-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(52, 211, 153, 0.05) 50%, transparent 70%);
+            z-index: -2;
+            animation: floatGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(-100px, -50px) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.2); }
+        }
+
+        /* Partikel Bergerak Melayang */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+            animation: flyParticle 5s linear infinite;
+        }
+        @keyframes flyParticle {
+            0% { transform: translateY(105vh) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Container Utama dengan Efek Masuk */
+        .hero-container {
+            max-width: 900px;
+            width: 100%;
+            padding: 40px 20px;
+            z-index: 1;
+            animation: fadeInScale 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Badge Bergerak Halus */
+        .elite-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+            animation: pulseBadge 2.5s infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+            50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(56, 189, 248, 0.5); }
+        }
+
+        .elite-badge i {
+            color: var(--accent);
+            animation: spinStar 4s linear infinite;
+        }
+        @keyframes spinStar { 100% { transform: rotate(360deg); } }
+
+        /* Judul Utama */
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+            display: inline-block;
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+            100% { text-shadow: 0 0 35px rgba(56, 189, 248, 0.8), 0 0 10px rgba(52, 211, 153, 0.5); }
+        }
+
+        .hero-desc {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 750px;
+            margin: 0 auto 35px auto;
+        }
+
+        /* Kotak Fitur Melayang */
+        .highlight-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .highlight-item {
+            background: rgba(13, 17, 23, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 22px;
+            border-radius: 14px;
+            text-align: left;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary));
+            transition: 0.5s;
+        }
+
+        .highlight-item:hover::before {
+            left: 100%;
+        }
+
+        .highlight-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(56, 189, 248, 0.2);
+        }
+
+        .highlight-item i {
+            font-size: 1.6rem;
+            color: var(--secondary);
+            margin-bottom: 12px;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .highlight-item:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .highlight-item h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .highlight-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Tombol Interaktif Bergerak */
+        .cta-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-mewah {
+            font-family: 'Orbitron', sans-serif;
+            background: var(--primary);
+            color: var(--bg-deep);
+            border: none;
+            padding: 16px 35px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-mewah:hover {
+            background: #7dd3fc;
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.9);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .btn-mewah.outline {
+            background: transparent;
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.2);
+        }
+
+        .btn-mewah.outline:hover {
+            background: var(--secondary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 40px rgba(52, 211, 153, 0.7);
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            animation: pulseFooter 3s infinite;
+        }
+
+        @keyframes pulseFooter {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="particles" id="particlesContainer"></div>
+
+    <div class="hero-container">
+        <div class="elite-badge">
+            <i class="fa-solid fa-certificate"></i> OFFICIAL SELECTION PORTAL // 2026
+        </div>
+
+        <h1>Pendidikan Kader Dakwah <br><span>Generasi Masa Depan</span></h1>
+
+        <p class="hero-desc">
+            Ahlan wa Sahlan kepada seluruh pemuda-pemudi hebat pendaftar PKD. Pintu gerbang sistem komando ini terbuka untuk merayakan keberanianmu melangkah di jalan kebaikan. Apapun hasil seleksinya nanti, niat suci dan semangatmu sudah menjadikanmu pemenang sejati di mata umat!
+        </p>
+
+        <div class="highlight-features">
+            <div class="highlight-item">
+                <i class="fa-solid fa-award"></i>
+                <h3>Status Kehormatan</h3>
+                <p>Setiap pendaftar resmi tercatat sebagai agen penebar manfaat.</p>
+            </div>
+            <div class="highlight-item">
+                <i class="fa-solid fa-face-smile-beam"></i>
+                <h3>Bahagia & Semangat</h3>
+                <p>Sistem dirancang khusus untuk membakar motivasi mental baja.</p>
+            </div>
+            <div class="highlight-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Akses Aman</h3>
+                <p>Gerbang enkripsi khusus menuju dashboard pribadi kader.</p>
+            </div>
+        </div>
+
+        <div class="cta-container">
+            <a href="login.html" class="btn-mewah" onclick="playClick()">
+                <i class="fa-solid fa-fingerprint"></i> MASUK KE HALAMAN LOGIN <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="Kelulusan.html" class="btn-mewah outline" onclick="playClick()">
+                <i class="fa-solid fa-rocket"></i> LIHAT HASIL KELULUSAN
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 RANGGA ASH RAFFY JANNUARTA.
+    </footer>
+
+    <script>
+        // Generator Partikel Melayang Otomatis
+        const particleContainer = document.getElementById('particlesContainer');
+        for (let i = 0; i < 25; i++) {
+            let p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            p.style.animationDelay = (Math.random() * 5) + 's';
+            particleContainer.appendChild(p);
+        }
+
+        // Web Audio API untuk Efek Suara Futuristik
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playClick() {
+            try {
+                initAudio();
+                let now = audioCtx.currentTime;
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(783.99, now + 0.1);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } catch(e) {}
+        }
+    </script>
+</body>
+</html>

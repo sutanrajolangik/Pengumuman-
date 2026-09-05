@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKD Hall of Fame // Pengumuman Pemenang Resmi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #030712;
+            --surface: #0f172a;
+            --surface-glass: rgba(15, 23, 42, 0.75);
+            --primary: #38bdf8;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.3);
+            --border-accent: rgba(251, 191, 36, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -2;
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            background: var(--surface-glass);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* LOGO YANG DITANAM LANGSUNG DI KODE */
+        .embedded-logo-container {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+        }
+
+        .embedded-logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+        }
+
+        .logo i {
+            color: var(--accent);
+            animation: pulseIcon 2s infinite;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .dashboard-banner {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .dashboard-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .banner-info .tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .banner-info h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 900;
+            color: var(--text-main);
+        }
+
+        .banner-info h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .banner-info p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-top: 6px;
+        }
+
+        .system-status {
+            background: rgba(3, 7, 18, 0.6);
+            border: 1px solid var(--border-glow);
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .system-status span {
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--secondary);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* YOUTUBE AUDIO COMMAND CENTER */
+        .music-control-panel {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-accent);
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .music-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .music-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .music-status-indicator {
+            font-size: 0.7rem;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid var(--border-accent);
+            padding: 4px 10px;
+            border-radius: 20px;
+            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .music-single-box {
+            background: rgba(3, 7, 18, 0.6);
+            border: 1px solid var(--border-glow);
+            color: var(--text-main);
+            padding: 12px 18px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        .music-single-box.active-track {
+            border-color: var(--accent);
+            background: rgba(251, 191, 36, 0.15);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+            color: var(--accent);
+        }
+
+        .track-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-icon-btn {
+            background: var(--surface);
+            border: 1px solid var(--border-glow);
+            color: var(--text-main);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .action-icon-btn:hover {
+            background: var(--primary);
+            color: var(--bg-deep);
+            border-color: var(--primary);
+        }
+
+        /* Container tersembunyi iframe YouTube */
+        #youtubeEmbedContainer {
+            position: fixed;
+            bottom: -200px;
+            right: -200px;
+            width: 1px;
+            height: 1px;
+            opacity: 0.01;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -999;
+        }
+
+        .winners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .winner-card {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-accent);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .winner-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.15);
+        }
+
+        .winner-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+
+        .winner-photo-frame {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            border: 2px dashed var(--border-accent);
+            overflow: hidden;
+            background: rgba(3, 7, 18, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            transition: 0.3s;
+        }
+
+        .winner-category {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.78rem;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .locked-view {
+            padding: 5px 0;
+        }
+
+        .countdown-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .btn-reveal {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, var(--accent), #d97706);
+            color: #030712;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .btn-reveal:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.6);
+            transform: scale(1.03);
+        }
+
+        .unlocked-view {
+            display: none;
+            animation: fadeInCard 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .winner-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .winner-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .action-area {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-cyber {
+            font-family: 'Orbitron', sans-serif;
+            background: var(--surface);
+            color: var(--primary);
+            border: 1px solid var(--border-glow);
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-cyber:hover {
+            background: var(--primary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+            border-color: var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            background: rgba(3, 7, 18, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .dashboard-banner { flex-direction: column; align-items: flex-start; }
+            .header-left-area { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body onload="autoPlayYouTubeTrack('IwzkfMmNMpM')">
+
+    <div class="cyber-grid"></div>
+    <div class="glow-orb"></div>
+
+    <!-- Wadah Iframe YouTube -->
+    <div id="youtubeEmbedContainer"></div>
+
+    <header>
+        <div class="header-left-area">
+            <!-- LOGO DITANAM LANGSUNG DI KODE (Ganti link gambar di atribut src di bawah sesuai keinginan) -->
+            <div class="embedded-logo-container" title="Logo Resmi PKD">
+                <img src="aset/Pp Mabit.png" alt="Logo">
+            </div>
+
+            <div class="logo">
+                <i class="fa-solid fa-trophy"></i> PKD HALL OF FAME
+            </div>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="dashboard-banner">
+            <div class="banner-info">
+                <span class="tagline">// OFFICIAL COMMAND CENTER // 2026</span>
+                <h1>HALL OF FAME <span>PEMENANG</span></h1>
+                <p>Pilih kategori di bawah untuk membuka enkripsi hitung mundur dan mengungkap sang juara resmi.</p>
+            </div>
+            <div class="system-status">
+                <span></span> AUTO-AUDIO ACTIVE
+            </div>
+        </div>
+
+        <!-- AUDIO COMMAND CENTER (1 LAGU: IwzkfMmNMpM) -->
+        <div class="music-control-panel">
+            <div class="music-header">
+                <div class="music-title-wrap">
+                    <i class="fa-solid fa-headphones-simple"></i> BACKGROUND AUDIO PLAYER
+                </div>
+                <div class="music-status-indicator" id="musicStatusText">Status: Auto-playing lagu latar...</div>
+            </div>
+
+            <div class="music-single-box active-track" id="trackBox-1">
+                <span><i class="fa-brands fa-youtube"></i> Musik Latar Resmi PKD (Auto-Play)</span>
+                <div class="track-actions">
+                    <button class="action-icon-btn" onclick="playYouTubeTrack('IwzkfMmNMpM')" title="Play Musik"><i class="fa-solid fa-play"></i></button>
+                    <button class="action-icon-btn" onclick="stopYouTubeTrack()" title="Matikan Musik"><i class="fa-solid fa-stop"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Kartu Kategori Pemenang -->
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div>
+                    <div class="winner-photo-frame" id="frame-1">
+                        <i class="fa-solid fa-user-secret"></i>
+                    </div>
+                    <div class="winner-category">1. King Terbaik PKD</div>
+                </div>
+                
+                <div class="locked-view" id="lock-1">
+                    <div class="countdown-text" id="cd-1">5</div>
+                    <button class="btn-reveal" onclick="startPerCategory(1, 'https://share.google/b1TezX8Z88KJm0ofo', 'Reyanullah', 'Dinobatkan sebagai King terbaik berkat keteladanan akhlak, wawasan kepemimpinan, dan karisma dakwah yang menginspirasi.')">
+                        <i class="fa-solid fa-lock-open"></i> Buka Pemenang
+                    </button>
+                </div>
+
+                <div class="unlocked-view" id="unlock-1">
+                    <div class="winner-name" id="name-1"></div>
+                    <p class="winner-desc" id="desc-1"></p>
+                </div>
+            </div>
+
+            <div class="winner-card">
+                <div>
+                    <div class="winner-photo-frame" id="frame-2" style="border-color: rgba(244, 114, 182, 0.4);">
+                        <i class="fa-solid fa-user-secret"></i>
+                    </div>
+                    <div class="winner-category">2. Queen Terbaik PKD</div>
+                </div>
+
+                <div class="locked-view" id="lock-2">
+                    <div class="countdown-text" id="cd-2">5</div>
+                    <button class="btn-reveal" onclick="startPerCategory(2, 'https://share.google/b1TezX8Z88KJm0ofo', 'Salwa', 'Meraih predikat Queen terbaik atas kecerdasan intelektual, keanggunan beretika, serta kontribusi aktif dalam diskusi.')">
+                        <i class="fa-solid fa-lock-open"></i> Buka Pemenang
+                    </button>
+                </div>
+
+                <div class="unlocked-view" id="unlock-2">
+                    <div class="winner-name" id="name-2"></div>
+                    <p class="winner-desc" id="desc-2"></p>
+                </div>
+            </div>
+
+            <div class="winner-card">
+                <div>
+                    <div class="winner-photo-frame" id="frame-3" style="border-color: rgba(52, 211, 153, 0.4);">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="winner-category">3. Kelompok The Best</div>
+                </div>
+
+                <div class="locked-view" id="lock-3">
+    <div class="countdown-text" id="cd-3">5</div>
+    <button class="btn-reveal" onclick="startPerCategory(3, 'https://drive.google.com/thumbnail?id=1cn7_mX29eAF7TxfKmGiFRgzCG7srhKsU&sz=w2000', 'Sa`ad Bin mu`adz', 'Kompak, solid, dan solutif! Berhasil menunjukkan kerja sama tim paling harmonis dalam seluruh penugasan komando.')">
+        <i class="fa-solid fa-lock-open"></i> Buka Pemenang
+    </button>
+</div>
+
+                <div class="unlocked-view" id="unlock-3">
+                    <div class="winner-name" id="name-3"></div>
+                    <p class="winner-desc" id="desc-3"></p>
+                </div>
+            </div>
+
+            <div class="winner-card">
+                <div>
+                    <div class="winner-photo-frame" id="frame-4" style="border-color: rgba(168, 85, 247, 0.4);">
+                        <i class="fa-solid fa-masks-theater"></i>
+                    </div>
+                    <div class="winner-category">4. Juara FGD</div>
+                </div>
+
+                <div class="locked-view" id="lock-4">
+                    <div class="countdown-text" id="cd-4">5</div>
+                    <button class="btn-reveal" onclick="startPerCategory(4, 'https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?w=300&auto=format&fit=crop&q=80', 'Masyarakat Prasejahtera', 'Menyajikan penampilan seni drama penuh pesan moral dan teatrikal mendalam yang sukses memukau dewan juri.')">
+                        <i class="fa-solid fa-lock-open"></i> Buka Pemenang
+                    </button>
+                </div>
+
+                <div class="unlocked-view" id="unlock-4">
+                    <div class="winner-name" id="name-4"></div>
+                    <p class="winner-desc" id="desc-4"></p>
+                </div>
+            </div>
+
+            <div class="winner-card">
+                <div>
+                    <div class="winner-photo-frame" id="frame-5" style="border-color: rgba(168, 85, 247, 0.4);">
+                        <i class="fa-solid fa-guitar"></i>
+                    </div>
+                    <div class="winner-category">4. Best Talent</div>
+                </div>
+
+               <div class="locked-view" id="lock-5">
+    <div class="countdown-text" id="cd-5">5</div>
+    <button class="btn-reveal" onclick="startPerCategory(5, 'https://drive.google.com/thumbnail?id=1oKDnOb7H1FkLEBQUuLgQksd_eooFkggO&sz=w2000', 'kelompok ukasyah', 'Menyuguhkan penampilan yang sangat kreatif serta sangat menghibur.')">
+        <i class="fa-solid fa-lock-open"></i> Buka Pemenang
+    </button>
+</div>
+
+                <div class="unlocked-view" id="unlock-5">
+                    <div class="winner-name" id="name-5"></div>
+                    <p class="winner-desc" id="desc-5"></p>
+                </div>
+            </div>
+
+            <div class="winner-card">
+                <div>
+                    <div class="winner-photo-frame" id="frame-6" style="border-color: rgba(56, 189, 248, 0.4);">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="winner-category">5. Best Speaker</div>
+                </div>
+
+                <div class="locked-view" id="lock-6">
+                    <div class="countdown-text" id="cd-6">5</div>
+                    <button class="btn-reveal" onclick="startPerCategory(6, 'https://share.google/b1TezX8Z88KJm0ofo', 'laura adelsia', 'Unggul secara argumentasi logis, ketajaman analisis isu keislaman kontemporer, dan retorika yang memukau.')">
+                        <i class="fa-solid fa-lock-open"></i> Buka Pemenang
+                    </button>
+                </div>
+
+                <div class="unlocked-view" id="unlock-6">
+                    <div class="winner-name" id="name-6"></div>
+                    <p class="winner-desc" id="desc-6"></p>
+                </div>
+            </div>
+
+            <div class="winner-card">
+                <div>
+                    <div class="winner-photo-frame" id="frame-7" style="border-color: rgba(56, 189, 248, 0.4);">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div class="winner-category">6. Juara Debat</div>
+                </div>
+
+            <div class="locked-view" id="lock-7">
+    <div class="countdown-text" id="cd-7">5</div>
+    <button class="btn-reveal" onclick="startPerCategory(7, 'https://drive.google.com/thumbnail?id=1f6mBihCcsjszPxakXWqXna2IzFyWKMLf&sz=w2000', 'Kelompok Nusaibah', 'Menunjukkan tangkisan argumen yang cerdas, ketenangan mental, serta penguasaan data yang sangat matang.')">
+        <i class="fa-solid fa-lock-open"></i> Buka Pemenang
+    </button>
+</div>
+
+                <div class="unlocked-view" id="unlock-7">
+                    <div class="winner-name" id="name-7"></div>
+                    <p class="winner-desc" id="desc-7"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <a href="dashboard.html" class="btn-cyber" onclick="playClick()">
+                <i class="fa-solid fa-arrow-left"></i> KEMBALI KE DASHBOARD UTAMA
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 RANGGA ASH RAFFY JANNUARTA
+    </footer>
+
+    <script>
+        // FUNGSI AUTO PLAY YOUTUBE SAAT HALAMAN DIBUKA
+        function autoPlayYouTubeTrack(videoId) {
+            const container = document.getElementById('youtubeEmbedContainer');
+            container.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}?autoplay=1" title="YouTube audio player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        }
+
+        // FUNGSI PEMUTAR MANUAL YOUTUBE
+        function playYouTubeTrack(videoId) {
+            const container = document.getElementById('youtubeEmbedContainer');
+            container.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}?autoplay=1" title="YouTube audio player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            
+            document.getElementById('trackBox-1').classList.add('active-track');
+            document.getElementById('musicStatusText').innerText = "Status: Memutar Musik Latar 🔊";
+        }
+
+        function stopYouTubeTrack() {
+            const container = document.getElementById('youtubeEmbedContainer');
+            container.innerHTML = ""; 
+            document.getElementById('trackBox-1').classList.remove('active-track');
+            document.getElementById('musicStatusText').innerText = "Status: Musik Dihentikan ⏹️";
+        }
+
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playBeep(freq = 600) {
+            try {
+                initAudio();
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            } catch(e) {}
+        }
+
+        function playSuccessSound() {
+            try {
+                initAudio();
+                let now = audioCtx.currentTime;
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.15);
+                osc.frequency.setValueAtTime(783.99, now + 0.3);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.6);
+            } catch(e) {}
+        }
+
+        function playClick() {
+            try {
+                initAudio();
+                let now = audioCtx.currentTime;
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(783.99, now + 0.1);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } catch(e) {}
+        }
+
+        function startPerCategory(id, imgUrl, winnerName, winnerDesc) {
+            const lockView = document.getElementById(`lock-${id}`);
+            const unlockView = document.getElementById(`unlock-${id}`);
+            const cdNum = document.getElementById(`cd-${id}`);
+            const revealBtn = lockView.querySelector('.btn-reveal');
+            const frameEl = document.getElementById(`frame-${id}`);
+            const nameEl = document.getElementById(`name-${id}`);
+            const descEl = document.getElementById(`desc-${id}`);
+
+            revealBtn.style.display = 'none';
+            cdNum.style.display = 'block';
+
+            let count = 5;
+            cdNum.innerText = count;
+            playBeep(500);
+
+            let timer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    cdNum.innerText = count;
+                    playBeep(600 + (5 - count) * 100);
+                } else {
+                    clearInterval(timer);
+                    playSuccessSound();
+
+                    frameEl.style.borderStyle = 'solid';
+                    frameEl.style.borderColor = 'var(--accent)';
+                    frameEl.innerHTML = `<img src="${imgUrl}" alt="Foto Pemenang" style="width:100%; height:100%; object-fit:cover;">`;
+
+                    nameEl.innerText = winnerName;
+                    descEl.innerText = winnerDesc;
+
+                    lockView.style.display = 'none';
+                    unlockView.style.display = 'block';
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

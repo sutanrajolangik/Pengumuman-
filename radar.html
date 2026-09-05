@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKD Live Radar // Command Center Statistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #010409;
+            --surface: #0d1117;
+            --primary: #38bdf8;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --border-glow: rgba(56, 189, 248, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Latar Belakang Grid */
+        .cyber-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 35px 35px;
+            z-index: -2;
+            animation: moveGrid 25s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 35px 35px; }
+        }
+
+        header {
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--secondary);
+            animation: pulseIcon 2s infinite;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .cyber-card {
+            background: rgba(13, 17, 23, 0.85);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        p.description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Countdown Widget */
+        .countdown-container {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(13, 17, 23, 0.8));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .countdown-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 3px;
+        }
+
+        .countdown-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .countdown-timer {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Area Radar Utama */
+        .radar-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        /* Lingkaran Radar Animasi */
+        .radar-box {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            margin: 0 auto;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, rgba(1, 4, 9, 0.8) 80%);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+            overflow: hidden;
+        }
+
+        .radar-circle-inner {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 170px; height: 170px;
+            border: 1px dashed rgba(56, 189, 248, 0.4);
+            border-radius: 50%;
+        }
+
+        .radar-circle-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px; height: 80px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 50%;
+        }
+
+        .radar-sweep {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: conic-gradient(from 0deg at 50% 50%, rgba(56, 189, 248, 0.6) 0deg, transparent 60deg, transparent 360deg);
+            border-radius: 50%;
+            animation: spinRadar 4s linear infinite;
+        }
+
+        @keyframes spinRadar {
+            100% { transform: rotate(360deg); }
+        }
+
+        .radar-dot {
+            position: absolute;
+            width: 8px; height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary);
+            animation: pulseDot 2s infinite;
+        }
+
+        .radar-dot.finalist {
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.8); opacity: 0.4; }
+        }
+
+        /* Statistik Grid Live */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 18px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .stat-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+        }
+
+        .stat-info h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .stat-info p {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .stat-item i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        /* Panel Rekam Jejak Historis (Tahun ke Tahun) */
+        .history-section {
+            margin-bottom: 25px;
+        }
+
+        .history-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .history-card {
+            background: rgba(22, 27, 34, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .history-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .history-card .year {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .history-card .stat-val {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .history-card .stat-val span {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* Live Terminal Log */
+        .terminal-box {
+            background: #000000;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            height: 100px;
+            overflow-y: hidden;
+            position: relative;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .terminal-header {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #logContent {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* Tombol Navigasi Bawah */
+        .action-area {
+            text-align: center;
+        }
+
+        .btn-cyber {
+            font-family: 'Orbitron', sans-serif;
+            background: var(--primary);
+            color: var(--bg-deep);
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .btn-cyber:hover {
+            background: #7dd3fc;
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.8);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .radar-section { grid-template-columns: 1fr; text-align: center; }
+            .countdown-container { flex-direction: column; gap: 10px; text-align: center; }
+            .history-grid { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-satellite-dish"></i> PKD RADAR COMMAND
+        </div>
+        </ul>
+    </header>
+
+    <main>
+        <div class="cyber-card">
+            <span class="tagline">// MONITORING COMMAND CENTER v4.2</span>
+            <h1>Live Radar <span>Pendaftar & Kader</span></h1>
+            <p class="description">Memantau rekapitulasi data historis pendaftar (2022–2026), tingkat ketatnya seleksi tahunan, serta posisi 27 peserta yang berada di tahap seleksi akhir menjelang pengumuman secara real-time.</p>
+
+            <!-- Countdown Menuju Pengumuman -->
+            <div class="countdown-container">
+                <div class="countdown-info">
+                    <h3><i class="fa-solid fa-hourglass-half"></i> HITUNG MUNDUR PENGUMUMAN SELEKSI AKHIR</h3>
+                    <p>Waktu tersisa sebelum gerbang kelulusan 27 peserta dibuka resmi.</p>
+                </div>
+                <div class="countdown-timer" id="countdownTimer">03D : 14H : 22M : 45S</div>
+            </div>
+
+            <div class="radar-section">
+                <div class="radar-box">
+                    <div class="radar-sweep"></div>
+                    <div class="radar-circle-inner"></div>
+                    <div class="radar-circle-center"></div>
+                    <!-- Titik Koordinat Sinyal Peserta Seleksi Akhir -->
+                    <div class="radar-dot finalist" style="top: 35%; left: 60%;" title="Peserta Seleksi Akhir"></div>
+                    <div class="radar-dot" style="top: 65%; left: 30%; animation-delay: 1s;"></div>
+                    <div class="radar-dot finalist" style="top: 25%; left: 40%; animation-delay: 0.5s;" title="Peserta Seleksi Akhir"></div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <h4>TOTAL PENDAFTAR (2022-2026)</h4>
+                            <p id="counterPendaftar">460</p>
+                        </div>
+                        <i class="fa-solid fa-users-viewfinder"></i>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <h4>SANTRI KADER AKTIF</h4>
+                            <p id="counterSantri">60</p>
+                        </div>
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <h4>SELEKSI TAHAP AKHIR</h4>
+                            <p style="color: var(--accent);">27 ORANG</p>
+                        </div>
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <h4>STATUS JARINGAN</h4>
+                            <p style="color: var(--secondary);">MENJELANG PENGUMUMAN</p>
+                        </div>
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Rekam Jejak Historis Seleksi Per Tahun -->
+            <div class="history-section">
+                <div class="history-title">
+                    <i class="fa-solid fa-chart-line"></i> REKAM JEJAK SELEKSI KADER TAHUNAN (2022–2025)
+                </div>
+                <div class="history-grid">
+                    <div class="history-card">
+                        <div class="year">2022</div>
+                        <div class="stat-val">160+ Pendaftar<br>Lolos: <span>~20 Santri</span></div>
+                    </div>
+                    <div class="history-card">
+                        <div class="year">2023</div>
+                        <div class="stat-val">110+ Pendaftar<br>Lolos: <span>~26Santri</span></div>
+                    </div>
+                    <div class="history-card">
+                        <div class="year">2024</div>
+                        <div class="stat-val">80+ Pendaftar<br>Lolos: <span>~ 13Santri</span></div>
+                    </div>
+                    <div class="history-card">
+                        <div class="year">2025</div>
+                        <div class="stat-val">105+ Pendaftar<br>Lolos: <span>~21 Santri</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal Live Activity Log -->
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <span><i class="fa-solid fa-terminal"></i> SYSTEM_ACTIVITY_FEED.LOG</span>
+                    <span style="color: var(--secondary);">SECURE_ENCRYPTED</span>
+                </div>
+                <div id="logContent">
+                    <div>[SYS] Inisialisasi radar satelit command center... OK.</div>
+                    <div>[SECURE] Memuat rekam jejak database 2022-2025... OK.</div>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <a href="dashboard.html" class="btn-cyber" onclick="playClick()">
+                    <i class="fa-solid fa-arrow-left"></i> KEMBALI KE DASHBOARD UTAMA
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 PKD INTELLIGENCE SYSTEM. ALL RIGHTS SECURED.
+    </footer>
+
+    <script>
+        // Simulasi Log Aktivitas Real-Time Berjalan
+        const logs = [
+            "[INFO] Sinkronisasi status 27 peserta tahap akhir berjalan lancar.",
+            "[CHECK] Verifikasi rekam jejak seleksi angkatan 2022 hingga 2025 aman.",
+            "[RADAR] Mengunci koordinat sinyal aktif wilayah pendaftaran utama.",
+            "[SYS] Menunggu hitung mundur pengumuman resmi kelulusan.",
+            "[SECURE] Enskripsi Command Center v4.2 aktif tanpa celah."
+        ];
+
+        setInterval(() => {
+            const logContainer = document.getElementById('logContent');
+            const randomLog = logs[Math.floor(Math.random() * logs.length)];
+            const timeStr = new Date().toLocaleTimeString();
+            
+            const newDiv = document.createElement('div');
+            newDiv.innerHTML = `[${timeStr}] ${randomLog}`;
+            
+            logContainer.appendChild(newDiv);
+            if (logContainer.children.length > 3) {
+                logContainer.removeChild(logContainer.children[0]);
+            }
+        }, 3500);
+
+        // Simulasi pergerakan kecil pada data pendaftar historis secara live
+        setInterval(() => {
+            const pendaftarEl = document.getElementById('counterPendaftar');
+            let currentVal = parseInt(pendaftarEl.innerText);
+            if (Math.random() > 0.8) {
+                currentVal += 1;
+                pendaftarEl.innerText = currentVal;
+            }
+        }, 4000);
+
+        // Simulasi Hitung Mundur Statis/Dinamis
+        let totalSeconds = 1 * 24 * 3600 + 14 * 3600 + 22 * 60 + 45;
+        setInterval(() => {
+            if (totalSeconds > 0) totalSeconds--;
+            let d = Math.floor(totalSeconds / (3600 * 24));
+            let h = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+            let m = Math.floor((totalSeconds % 3600) / 60);
+            let s = totalSeconds % 60;
+            
+            document.getElementById('countdownTimer').innerText = 
+                `${String(d).padStart(2, '0')}D : ${String(h).padStart(2, '0')}H : ${String(m).padStart(2, '0')}M : ${String(s).padStart(2, '0')}S`;
+        }, 1000);
+
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playClick() {
+            try {
+                initAudio();
+                let now = audioCtx.currentTime;
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(783.99, now + 0.1);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } catch(e) {}
+        }
+    </script>
+</body>
+</html>

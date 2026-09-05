@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKD CENTRAL ARCHIVE // MEMORY LOGS 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --surface: #0b1329;
+            --surface-glass: rgba(11, 19, 41, 0.85);
+            --primary: #38bdf8;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --neon-pink: #f472b6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.4);
+            --border-accent: rgba(251, 191, 36, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -3;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: -2;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-orb-2 {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.07) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header / Navbar */
+        header {
+            background: var(--surface-glass);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .logo-img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+            animation: pulseIcon 2s infinite;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--accent)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--accent)); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.78rem;
+            transition: 0.3s;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .cyber-banner {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 35px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .cyber-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 6px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent), var(--neon-pink));
+        }
+
+        .banner-tag {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 10px;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .cyber-banner h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .cyber-banner h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+        }
+
+        .cyber-banner p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 12px;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        .terminal-box {
+            background: rgba(2, 6, 23, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-top: 25px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .terminal-box i {
+            color: var(--primary);
+        }
+
+        /* Timeline Tabs (Day 1 - 5) */
+        .timeline-tabs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .timeline-tab {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glow);
+            padding: 18px;
+            border-radius: 14px;
+            color: var(--text-muted);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-tab::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: transparent;
+            transition: 0.3s;
+        }
+
+        .timeline-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+        }
+
+        .timeline-tab.active {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(52, 211, 153, 0.15));
+            border-color: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+        }
+
+        .timeline-tab.active::before {
+            background: var(--primary);
+        }
+
+        .timeline-tab span {
+            display: block;
+            font-size: 0.65rem;
+            color: var(--accent);
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+
+        /* Panels */
+        .timeline-panel {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 35px;
+            backdrop-filter: blur(20px);
+            display: none;
+            animation: panelFade 0.5s ease-in-out forwards;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .timeline-panel.active {
+            display: block;
+        }
+
+        @keyframes panelFade {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .panel-top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .panel-heading h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .panel-heading p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 4px;
+        }
+
+        .status-badge {
+            background: rgba(52, 211, 153, 0.15);
+            color: var(--secondary);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .panel-desc-box {
+            margin-bottom: 25px;
+        }
+
+        .panel-desc-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .panel-desc-box p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* Grid 5 Foto dengan Judul di Bawah/Overlay */
+        .preview-photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .photo-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-glow);
+            background: #000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-wrapper {
+            width: 100%;
+            height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s ease;
+        }
+
+        .photo-card:hover .photo-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .photo-title {
+            padding: 10px;
+            background: rgba(2, 6, 23, 0.95);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.68rem;
+            color: var(--text-main);
+            text-align: center;
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Tombol GDrive */
+        .btn-gdrive-cyber {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(56, 189, 248, 0.05));
+            color: var(--primary);
+            border: 1px solid var(--border-glow);
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+
+        .btn-gdrive-cyber:hover {
+            background: var(--primary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Cinematic Video */
+        .cinematic-video-section {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-accent);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        }
+
+        .cinematic-video-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary), var(--neon-pink));
+        }
+
+        .video-header-center {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .video-header-center h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+            color: var(--accent);
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+        }
+
+        .video-header-center p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .cinematic-frame {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            background: #000;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        }
+
+        .cinematic-frame iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: none;
+        }
+
+        .action-area {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn-cyber-back {
+            font-family: 'Orbitron', sans-serif;
+            background: var(--surface);
+            color: var(--primary);
+            border: 1px solid var(--border-glow);
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .btn-cyber-back:hover {
+            background: var(--primary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.5px;
+            background: rgba(2, 6, 23, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+    <div class="scanlines"></div>
+    <div class="glow-orb"></div>
+    <div class="glow-orb-2"></div>
+
+    <header>
+        <div class="logo">
+            <!-- SILAKAN GANTI URL_LOGO_KAMU_DISINI.png DENGAN LINK LOGO KAMU -->
+            <img src="aset/Pp Mabit.png" alt="Logo PKD" class="logo-img">
+            PKD COMMAND ARCHIVE
+        </div>
+    </header>
+
+    <main>
+        <div class="cyber-banner">
+            <span class="banner-tag">// SYSTEM MEMORY LOGS // 5-DAY DEPLOYMENT</span>
+            <h1>ARSIP DIGITAL <span>ITIKAF & KEPEMIMPINAN</span></h1>
+            <p>Pusat penyimpanan data eksklusif perjalanan 5 hari masa pembentukan karakter, materi, modul, serta rekaman momen bersejarah yang mengikat persaudaraan kita.</p>
+
+            <div class="terminal-box">
+                <i class="fa-solid fa-terminal"></i>
+                <span id="typing-terminal">STATUS: SECURE ARCHIVE LOADED SUCCESSFULLY. SELECT TIMELINE INDEX BELOW.</span>
+            </div>
+        </div>
+
+        <div class="timeline-tabs">
+            <button class="timeline-tab active" onclick="switchTimeline(1)">
+                DAY 01 <span>[ PEMBUKAAN ]</span>
+            </button>
+            <button class="timeline-tab" onclick="switchTimeline(2)">
+                DAY 02 <span>[ PENDALAMAN ]</span>
+            </button>
+            <button class="timeline-tab" onclick="switchTimeline(3)">
+                DAY 03 <span>[ LEADERSHIP ]</span>
+            </button>
+            <button class="timeline-tab" onclick="switchTimeline(4)">
+                DAY 04 <span>[ DEBAT & PENSI ]</span>
+            </button>
+            <button class="timeline-tab" onclick="switchTimeline(5)">
+                DAY 05 <span>[ CLOSING & HOF ]</span>
+            </button>
+        </div>
+
+        <!-- =================== PANEL DAY 1 =================== -->
+        <div class="timeline-panel active" id="panel-1">
+            <div class="panel-top-info">
+                <div class="panel-heading">
+                    <h2>DAY 01: Orientasi Medan & Inisiasi Komando</h2>
+                    <p>Timestamp: Hari Pertama Deployment</p>
+                </div>
+                <div class="status-badge"><i class="fa-solid fa-check-circle"></i> ARCHIVED</div>
+            </div>
+            <div class="panel-desc-box">
+                <h3>Fokus & Ringkasan Kegiatan</h3>
+                <p>Hari pembukaan dimulai dengan proses registrasi peserta, penataan kelompok komando, serta briefing orientasi kedisiplinan dan ruhiyah bersama instruktur.</p>
+                
+                <div class="preview-photos-grid">
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1ZEm5YLGwDwwsp10dzXT6PO3_KdXf9wqu&sz=w2000"
+        alt="Registrasi Peserta"
+    >
+</div>
+                        <div class="photo-title">01. Psikotest</div>
+                    </div>
+                    <div class="photo-card">
+                     <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1wZpU-L8v2S08rfUDrj8g6TOSbNm2uTxx&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">02. Pengenalan panitia</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1t6KS25oAahU8MQwinzwYBNm3vMZK-f7M&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">03. Pengarahan dari Panitia</div>
+                    </div>
+                    <div class="photo-card">
+                       <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1onu8SZTVIz8RNYQr1JY8rc9k5QzY45yk&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">04. Para Pejuang Panitia</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1kY8eoeYov8pgipCwt_1QRRVDoBOB36DX&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">05. Materi Pembukaan dari Panitia</div>
+                    </div>
+                </div>
+
+                <!-- Ganti link di href="..." dengan link Google Drive khusus Day 1 kamu -->
+                <a href="https://drive.google.com/drive/folders/1XpdJwylYYANLmZk_DXRBjmT_hjAv17mL?usp=drive_link" target="_blank" class="btn-gdrive-cyber">
+                    <i class="fa-brands fa-google-drive"></i> AKSES FOLDER GDRIVE DAY 01
+                </a>
+            </div>
+        </div>
+
+        <!-- =================== PANEL DAY 2 =================== -->
+        <div class="timeline-panel" id="panel-2">
+            <div class="panel-top-info">
+                <div class="panel-heading">
+                    <h2>DAY 02: Kajian Intelektual & Diskusi Terfokus</h2>
+                    <p>Timestamp: Hari Kedua Deployment</p>
+                </div>
+                <div class="status-badge"><i class="fa-solid fa-check-circle"></i> ARCHIVED</div>
+            </div>
+            <div class="panel-desc-box">
+                <h3>Fokus & Ringkasan Kegiatan</h3>
+                <p>Sesi pendalaman materi keislaman kontemporer dan strategi dakwah, dilanjutkan dengan Focus Group Discussion (FGD) memecahkan studi kasus nyata.</p>
+                
+                <div class="preview-photos-grid">
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1_dh8WuDRlnTZ-rgeKOxH1RCR4erq5iaC&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">01. Materi dari Dekan FAIPG</div>
+                    </div>
+                    <div class="photo-card">
+                       <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1dXoOa-7-40-8y1fklR79UehuS6itopRU&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">02. Materi dari WR 2</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1_1-a-Jjegq5ohYGuXpp_J6XIW5l-D7nK&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">03. Materi dari Dekan Faperta</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=15J21kDvC-K538qvulQTZOR_EKuPEgb6P&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">04. Materi dari Dekan FEB</div>
+                    </div>
+                    <div class="photo-card">
+                       <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=13PiO1Vel1P_AlOUga4Y5iJwkDgHE0vla&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">05. FGD</div>
+                    </div>
+                </div>
+
+                <!-- Ganti link di href="..." dengan link Google Drive khusus Day 2 kamu -->
+                <a href="https://drive.google.com/drive/folders/12WJklALVyC88Dxh5dSCHOv_rsjHDnVsx?usp=drive_link" target="_blank" class="btn-gdrive-cyber">
+                    <i class="fa-brands fa-google-drive"></i> AKSES FOLDER GDRIVE DAY 02
+                </a>
+            </div>
+        </div>
+
+        <!-- =================== PANEL DAY 3 =================== -->
+        <div class="timeline-panel" id="panel-3">
+            <div class="panel-top-info">
+                <div class="panel-heading">
+                    <h2>DAY 03: Simulasi Kepemimpinan & Aksi Lapangan</h2>
+                    <p>Timestamp: Hari Ketiga Deployment</p>
+                </div>
+                <div class="status-badge"><i class="fa-solid fa-check-circle"></i> ARCHIVED</div>
+            </div>
+            <div class="panel-desc-box">
+                <h3>Fokus & Ringkasan Kegiatan</h3>
+                <p>Pelatihan manajerial kepemimpinan taktis, simulasi problem-solving kelompok di bawah tekanan waktu, serta malam keakraban ukhuwah.</p>
+                
+                <div class="preview-photos-grid">
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1WyRO-peIl5nutKMtU4e_qG_Ik3YqxoWS&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">01. Materi Bersama Ibunda Rektor</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=17wVXuHfKaGz9rKyz4Q0ZPiDTxg2-ZyeT&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">02. Materi Bersama Bapak WR 1</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1T8dQbKKBsvDwTWxWTqmQSGZOMgCv1pnd&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">03. Debat </div>
+                    </div>
+                    <div class="photo-card">
+                       <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=136RTKvX0qKb47iumRzIeDHoOaWeu0gyb&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">04.  Materi Bersama Bapak Chansellor</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1M5_tAB9DRD_79qnTyPDt-o3nHG9IYBOc&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">05. Malam Keakraban</div>
+                    </div>
+                </div>
+
+                <!-- Ganti link di href="..." dengan link Google Drive khusus Day 3 kamu -->
+                <a href="https://drive.google.com/drive/folders/LINK_GDRIVE_DAY_3" target="_blank" class="btn-gdrive-cyber">
+                    <i class="fa-brands fa-google-drive"></i> AKSES FOLDER GDRIVE DAY 03
+                </a>
+            </div>
+        </div>
+
+        <!-- =================== PANEL DAY 4 =================== -->
+        <div class="timeline-panel" id="panel-4">
+            <div class="panel-top-info">
+                <div class="panel-heading">
+                    <h2>DAY 04: Puncak Lomba Debat & Pentas Seni</h2>
+                    <p>Timestamp: Hari Keempat Deployment</p>
+                </div>
+                <div class="status-badge"><i class="fa-solid fa-check-circle"></i> ARCHIVED</div>
+            </div>
+            <div class="panel-desc-box">
+                <h3>Fokus & Ringkasan Kegiatan</h3>
+                <p>Adu argumen intelektual tingkat tinggi melalui final lomba debat antar kelompok, ditutup dengan pertunjukan seni kreatif yang meriah.</p>
+                
+                <div class="preview-photos-grid">
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1FM7wu-gseo5IPG3l0Hy6jopqbgkfiDSE&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">01. Olahraga Pagi</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper">
+    <img 
+        src="https://drive.google.com/thumbnail?id=1YuW4HzbPD6KaP_f9KzTCXxJug-Eg41uv&sz=w2000" 
+        alt="Briefing Ruhiyah"
+    >
+</div>
+                        <div class="photo-title">02. Materi bersama Wakil Dekan FH</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&auto=format&fit=crop&q=80" alt="Gladi Bersih Pensi"></div>
+                        <div class="photo-title">03. Gladi Bersih Pensi</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper"><img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&auto=format&fit=crop&q=80" alt="Perform Pentas Seni"></div>
+                        <div class="photo-title">04. Perform Pentas Seni</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper"><img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400&auto=format&fit=crop&q=80" alt="Selebrasi Malam Seni"></div>
+                        <div class="photo-title">05. Selebrasi Malam Seni</div>
+                    </div>
+                </div>
+
+                <!-- Ganti link di href="..." dengan link Google Drive khusus Day 4 kamu -->
+                <a href="https://drive.google.com/drive/folders/LINK_GDRIVE_DAY_4" target="_blank" class="btn-gdrive-cyber">
+                    <i class="fa-brands fa-google-drive"></i> AKSES FOLDER GDRIVE DAY 04
+                </a>
+            </div>
+        </div>
+
+        <!-- =================== PANEL DAY 5 =================== -->
+        <div class="timeline-panel" id="panel-5">
+            <div class="panel-top-info">
+                <div class="panel-heading">
+                    <h2>DAY 05: Evaluasi Akhir & Penutupan Resmi</h2>
+                    <p>Timestamp: Hari Kelima Deployment</p>
+                </div>
+                <div class="status-badge"><i class="fa-solid fa-check-circle"></i> ARCHIVED</div>
+            </div>
+            <div class="panel-desc-box">
+                <h3>Fokus & Ringkasan Kegiatan</h3>
+                <p>Sidang pleno evaluasi program, penobatan pemenang di Hall of Fame, prosesi pelantikan alumni, serta penutupan khidmat.</p>
+                
+                <div class="preview-photos-grid">
+                    <div class="photo-card">
+                        <div class="photo-wrapper"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=80" alt="Sidang Pleno Pleno"></div>
+                        <div class="photo-title">01. Sidang Pleno Pleno</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=80" alt="Pengumuman Hall of Fame"></div>
+                        <div class="photo-title">02. Hall of Fame Award</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&auto=format&fit=crop&q=80" alt="Ikrar & Pelantikan"></div>
+                        <div class="photo-title">03. Ikrar & Pelantikan</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper"><img src="https://images.unsplash.com/photo-1515169067868-5387ec356754?w=400&auto=format&fit=crop&q=80" alt="Sesi Foto Bersama"></div>
+                        <div class="photo-title">04. Sesi Foto Bersama</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-wrapper"><img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=400&auto=format&fit=crop&q=80" alt="Sayonara & Penutupan"></div>
+                        <div class="photo-title">05. Sayonara & Penutupan</div>
+                    </div>
+                </div>
+
+                <!-- Ganti link di href="..." dengan link Google Drive khusus Day 5 kamu -->
+                <a href="https://drive.google.com/drive/folders/LINK_GDRIVE_DAY_5" target="_blank" class="btn-gdrive-cyber">
+                    <i class="fa-brands fa-google-drive"></i> AKSES FOLDER GDRIVE DAY 05
+                </a>
+            </div>
+        </div>
+
+        <!-- CINEMATIC VIDEO KENANGAN -->
+        <div class="cinematic-video-section">
+            <div class="video-header-center">
+                <h2><i class="fa-solid fa-clapperboard"></i> CINEMATIC HIGHLIGHT: 5 DAYS MEMORIES</h2>
+                <p>Rekaman memori eksklusif yang merangkum tawa, perjuangan, air mata kebersamaan, dan ikatan ukhuwah kita.</p>
+            </div>
+
+            <div class="cinematic-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Cinematic Memory Video" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <a href="dashboard.html" class="btn-cyber-back" onclick="playClickSound()">
+                <i class="fa-solid fa-arrow-left"></i> KEMBALI KE DASHBOARD UTAMA
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 RANGGA ASH RAFFY JANNUARTA.
+    </footer>
+
+    <script>
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playClickSound() {
+            try {
+                initAudio();
+                let now = audioCtx.currentTime;
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(580, now);
+                osc.frequency.setValueAtTime(800, now + 0.08);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            } catch(e) {}
+        }
+
+        function switchTimeline(dayNum) {
+            playClickSound();
+
+            document.querySelectorAll('.timeline-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.timeline-panel').forEach(panel => panel.classList.remove('active'));
+
+            document.querySelectorAll('.timeline-tab')[dayNum - 1].classList.add('active');
+            document.getElementById(`panel-${dayNum}`).classList.add('active');
+
+            const terminalTexts = [
+                "LOADING ARCHIVE: DAY 01 - ORIENTASI & INISIASI MEDAN...",
+                "LOADING ARCHIVE: DAY 02 - KAJIAN INTELEKTUAL & FGD...",
+                "LOADING ARCHIVE: DAY 03 - SIMULASI KEPEMIMPINAN TAKTIS...",
+                "LOADING ARCHIVE: DAY 04 - PUNCAK DEBAT & PENTAS SENI...",
+                "LOADING ARCHIVE: DAY 05 - EVALUASI AKHIR & HALL OF FAME..."
+            ];
+            document.getElementById('typing-terminal').innerText = terminalTexts[dayNum - 1];
+        }
+    </script>
+</body>
+</html>

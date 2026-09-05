@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKD Ultimate Cyber Command | Future Dakwah System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --surface: #0f172a;
+            --surface-hover: #1e293b;
+            --primary: #06b6d4; /* Cyan futuristic */
+            --secondary: #10b981; /* Neon green */
+            --accent: #f59e0b; /* Gold/Amber */
+            --danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(6, 182, 212, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Latar Belakang Efek Grid Cyber */
+        .cyber-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+            background-size: 35px 35px;
+            z-index: -1;
+        }
+
+        /* Header Command Center */
+        header {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-badge {
+            width: 45px;
+            height: 45px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            overflow: hidden;
+        }
+
+        .logo-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            letter-spacing: 1px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text span {
+            font-size: 0.65rem;
+            color: var(--secondary);
+            letter-spacing: 2px;
+        }
+
+        /* Nav Menu & Hamburger Toggle */
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background: var(--primary);
+            color: var(--bg-deep);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Tombol Hamburger (Default Sembunyi di Desktop) */
+        .hamburger-btn {
+            display: none;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 1.3rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover {
+            background: var(--primary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Konten Utama */
+        main {
+            flex: 1;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-panel {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .section-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cyber-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 45px 35px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        h1, h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        h1 { font-size: 2.2rem; }
+        h1 span { color: var(--primary); }
+        h2 { font-size: 1.5rem; color: var(--primary); }
+
+        .terminal-typing {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            min-height: 30px;
+        }
+
+        p.description {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .feature-box {
+            background: var(--surface-hover);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .feature-box:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.2);
+        }
+
+        .feature-box i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .feature-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .feature-box p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .generator-box {
+            background: rgba(3, 7, 18, 0.7);
+            border: 1px dashed var(--primary);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .generator-box input {
+            background: var(--surface);
+            border: 1px solid var(--border-glow);
+            padding: 12px 20px;
+            color: var(--text-main);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn-cyber {
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-cyber:hover {
+            background: var(--primary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+        }
+
+        .btn-cyber.alt {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+        .btn-cyber.alt:hover {
+            background: var(--secondary);
+            color: var(--bg-deep);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+        }
+
+        #badgeResult {
+            display: none;
+            margin-top: 25px;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border: 2px solid var(--accent);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+        }
+
+        #badgeResult h3 {
+            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: var(--surface);
+            border: 1px solid var(--primary);
+            padding: 35px;
+            border-radius: 16px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.4);
+        }
+
+        .modal-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .modal-box p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Media Query untuk HP */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                padding: 12px 20px;
+            }
+
+            .hamburger-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none; /* Disembunyikan dulu secara default di HP */
+                flex-direction: column;
+                width: 100%;
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--border-glow);
+                border-radius: 12px;
+                padding: 15px;
+                margin-top: 15px;
+                gap: 10px;
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            }
+
+            /* Kelas aktif untuk menampilkan menu saat hamburger diklik */
+            .nav-menu.show {
+                display: flex;
+            }
+
+            .nav-menu li {
+                width: 100%;
+            }
+
+            .nav-menu a {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 12px 16px;
+            }
+
+            h1 { font-size: 1.6rem; }
+            .cyber-card { padding: 25px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-badge">
+                <img src="aset/Pp Mabit.png" alt="Logo PKD" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-robot\' style=\'color:var(--primary);\'></i>'">
+            </div>
+            <div class="logo-text">
+                PKD-COMMAND SYSTEM
+                <span>SECURE DA'WAH NETWORK</span>
+            </div>
+        </div>
+
+        <!-- Tombol Hamburger -->
+        <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i> Beranda</a></li>
+            <li><a href="Kejuaraan.html"><i class="fa-solid fa-bullhorn"></i> Pengumuman</a></li>
+            <li><a href="Video.html"><i class="fa-solid fa-photo-film"></i> Galeri Media</a></li>
+            <li><a href="radar.html"><i class="fa-solid fa-satellite-dish"></i> Radar</a></li>
+        </ul>
+    </header>
+
+    <main>
+
+        <section id="home" class="section-panel active">
+            <div class="cyber-card">
+                <span class="tagline">// INITIATING WELCOME PROTOCOL</span>
+                <h1>Selamat Datang, <span>Calon Kader Dakwah!</span></h1>
+                <div class="terminal-typing" id="typing-text"></div>
+                <p class="description">
+                    Sistem mendeteksi keberanian luar biasa dari namamu yang sudah mendaftar. Apapun hasil seleksi sistemik nanti, niat sucimu telah mengaktifkan status kehormatan sebagai pembawa misi kebaikan. Lulus atau tidak, energi positif dan semangat juang tidak boleh padam!
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-box" onclick="switchLocalTab('motivasi')">
+                        <i class="fa-solid fa-brain"></i>
+                        <h3>Booster Mental</h3>
+                        <p>Dapatkan suntikan semangat instan & pemahaman bijak menghadapi seleksi.</p>
+                    </div>
+                    <div class="feature-box" onclick="switchLocalTab('sertifikat')">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h3>ID Card Kehormatan</h3>
+                        <p>Cetak lencana digital eksklusif khusus untukmu sebagai pejuang dakwah.</p>
+                    </div>
+                    <div class="feature-box" onclick="switchLocalTab('rahasia')">
+                        <i class="fa-solid fa-gift"></i>
+                        <h3>Kejutan Sistem</h3>
+                        <p>Buka pesan khusus dari AI Command Center untuk melejitkan bahagiamu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="motivasi" class="section-panel">
+            <div class="cyber-card">
+                <span class="tagline">// DIAGNOSTIC STATUS: MENTAL BAJA</span>
+                <h2>Pusat Booster Semangat Dakwah</h2>
+                <p class="description">Klik tombol di bawah untuk mendapatkan kutipan motivasi futuristik & Islami secara acak guna meredakan rasa cemas pengumuman seleksi!</p>
+                
+                <div style="background: rgba(3, 7, 18, 0.6); border: 1px solid var(--border-glow); padding: 25px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                    <p id="quoteDisplay" style="font-size: 1.1rem; color: var(--secondary); font-style: italic; font-weight: 500;">
+                        "Setiap pejuang kebaikan tidak pernah kalah; jika tidak menang di satu pintu, Allah siapkan ribuan pintu kemenangan di tempat lain." 🚀
+                    </p>
+                </div>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn-cyber" onclick="generateNewQuote()">
+                        <i class="fa-solid fa-rotate"></i> Acak Kutipan Motivasi
+                    </button>
+                    <button class="btn-cyber alt" onclick="switchLocalTab('home')">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="sertifikat" class="section-panel">
+            <div class="cyber-card">
+                <span class="tagline">// DIGITAL BADGE GENERATOR</span>
+                <h2>Buat ID Card Kehormatan Pendaftar PKD</h2>
+                <p class="description">Masukkan nama lengkapmu di bawah ini. Sistem dirancang unik: hingga 15 orang berbeda yang memasukkan nama akan mendapatkan kode lencana serta kata-kata motivasi yang berbeda satu sama lain!</p>
+                
+                <div class="generator-box">
+                    <input type="text" id="cadetName" placeholder="Ketik Nama Lengkapmu Disini..." autocomplete="off">
+                    <br>
+                    <button class="btn-cyber" onclick="generateBadge()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate ID Card
+                    </button>
+                </div>
+
+                <div id="badgeResult">
+                    <h3 id="badgeTitle">🛡️ STATUS: TERVERIFIKASI RESMI</h3>
+                    <p style="color: var(--text-main); font-size: 1.2rem; font-weight: 700; margin: 10px 0;" id="displayName">[Nama Kamu]</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem;" id="badgeDesc">Status: <strong>Official Cyber Cadet</strong>. Niatmu sudah tercatat sebagai pejuang risalah mulia.</p>
+                </div>
+
+                <div style="margin-top: 25px;">
+                    <button class="btn-cyber alt" onclick="switchLocalTab('home')">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="rahasia" class="section-panel">
+            <div class="cyber-card">
+                <span class="tagline">// TOP SECRET PROTOCOL</span>
+                <h2>Pesan Rahasia dari AI Command Center</h2>
+                <p class="description">Sistem mendeteksi bahwa kamu adalah orang yang beruntung dan luar biasa karena berani mengambil jalan untuk mendalami ilmu dakwah.</p>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn-cyber" onclick="openSecretModal()">
+                        <i class="fa-solid fa-key"></i> Buka Kotak Kejutan Rahasia
+                    </button>
+                    <button class="btn-cyber alt" onclick="switchLocalTab('home')">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal-overlay" id="secretModal">
+        <div class="modal-box">
+            <h3>🎉 SELAMAT, KAMU SPESIAL! 🎉</h3>
+            <p>Apapun hasil seleksi resmi nanti (Lulus atau Tidak), ingatlah bahwa **proses belajar tidak pernah punya batas kampus**. Kamu sudah menjadi pemenang karena mau mendaftar dan peduli pada umat. Tetap senyum, tetap semangat, dan sebarkan kebahagiaan ke sekitarmu!</p>
+            <button class="btn-cyber" onclick="closeSecretModal()" style="width: 100%; justify-content: center;">
+                MENGERTI // SIAP BAHAGIA SELALU
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 RANGGA ASH RAFFY JANNUARTA.
+    </footer>
+
+    <script>
+        // Fungsi Toggle Menu Hamburger di HP
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            navMenu.classList.toggle('show');
+            
+            // Ubah ikon hamburger menjadi tanda silang (X) saat dibuka dan sebaliknya
+            const icon = hamburgerBtn.querySelector('i');
+            if (navMenu.classList.contains('show')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        function switchLocalTab(tabId) {
+            const panels = document.querySelectorAll('.section-panel');
+            panels.forEach(panel => panel.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Otomatis tutup menu jika diklik di HP
+            const navMenu = document.getElementById('navMenu');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                hamburgerBtn.querySelector('i').classList.remove('fa-xmark');
+                hamburgerBtn.querySelector('i').classList.add('fa-bars');
+            }
+        }
+
+        const phrases = [
+            "Mendeteksi Calon Pemimpin Masa Depan... [OK]",
+            "Sinkronisasi Niat Suci & Teknologi Masa Kini... [SUCCESS]",
+            "Status: Lulus atau Belum, Semangat Tetap Maksimal! 🚀",
+            "Selamat Berjuang, Penebar Kebaikan Tanpa Batas ✨"
+        ];
+        let idx = 0;
+
+        function runTyping() {
+            let currentPhrase = phrases[idx].split("");
+            let element = document.getElementById('typing-text');
+            if(!element) return;
+            element.innerHTML = "";
+            
+            let i = 0;
+            let timer = setInterval(() => {
+                if (i < currentPhrase.length) {
+                    element.innerHTML += currentPhrase[i];
+                    i++;
+                } else {
+                    clearInterval(timer);
+                    setTimeout(eraseTyping, 2500);
+                }
+            }, 50);
+        }
+
+        function eraseTyping() {
+            let element = document.getElementById('typing-text');
+            if(!element) return;
+            let text = element.innerHTML;
+            let timer = setInterval(() => {
+                if (text.length > 0) {
+                    text = text.slice(0, -1);
+                    element.innerHTML = text;
+                } else {
+                    clearInterval(timer);
+                    idx = (idx + 1) % phrases.length;
+                    setTimeout(runTyping, 400);
+                }
+            }, 25);
+        }
+
+        runTyping();
+
+        const quotes = [
+            "\"Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lainnya.\" (HR. Ahmad) — Perjalanan dakwahmu sudah dimulai sejak hari ini.",
+            "\"Penolakan atau kegagalan dalam seleksi hanyalah cara Allah menyiapkan peran terbaik di tempat lain yang lebih luar biasa.\" 🌟",
+            "\"Mental baja dibentuk dari keberanian untuk terus mencoba dan tersenyum, apapun hasil yang diumumkan nanti.\" 💪",
+            "\"Dunia butuh lebih banyak orang baik yang bergerak aktif. Teruslah menebar manfaat tanpa tapi dan tanpa nanti!\" 🚀",
+            "\"Lulus seleksi adalah bonus, tetapi niat ikhlas berjuang di jalan dakwah adalah kemenangan sejati.\" ✨"
+        ];
+
+        function generateNewQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quoteDisplay').innerHTML = quotes[randomIndex];
+        }
+
+        const uniqueMotivations = [
+            "Kode Akses: ALFA-01. Keberanianmu melangkah mendaftarkan diri adalah bukti awal jiwa pemimpin sejati yang siap menebar kebaikan di mana pun berada.",
+            "Kode Akses: BRAVO-02. Fokus pada proses dan ketulusan niat. Sistem mencatat tekadmu jauh lebih berharga daripada sekadar status kelulusan administratif.",
+            "Kode Akses: CHARLIE-03. Jadikan setiap tantangan seleksi sebagai batu loncatan untuk mengasah mental baja dan keteguhan iman yang tangguh.",
+            "Kode Akses: DELTA-04. Energi positifmu memancarkan frekuensi pejuang dakwah masa depan yang cerdas, adaptif, dan membawa solusi bagi sesama.",
+            "Kode Akses: ECHO-05. Langkah kecilmu hari ini di sistem cyber dakwah adalah awal dari rekam jejak besar perubahan positif di tengah masyarakat.",
+            "Kode Akses: FOXTROT-06. Tetaplah tersenyum dan optimis! Pintu kebaikan terbuka lebar bagi siapa saja yang hatinya tulus ingin berproses.",
+            "Kode Akses: GOLF-07. Kecerdasan intelektual dipadukan dengan akhlak mulia akan melahirkan dampak luar biasa. Teruslah membakar semangat juangmu!",
+            "Kode Akses: HOTEL-08. Apapun hasil akhir dari sistem seleksi, tekadmu untuk belajar agama dan teknologi sudah mencatatkanmu sebagai pemenang sejati.",
+            "Kode Akses: INDIA-09. Jangan pernah meragukan kapasitas dirimu. Dunia membutuhkan lebih banyak tangan kreatif yang peduli pada kemaslahatan umat.",
+            "Kode Akses: JULIET-10. Ketulusan hatiku mendaftar kemari bernilai mulia di sisi-Nya. Teruslah melangkah maju tanpa rasa takut gagal.",
+            "Kode Akses: KILO-11. Sistem mendeteksi potensi kepemimpinan yang kuat dalam dirimu. Terus asah kemampuan komunikasi dan kerja sama tim!",
+            "Kode Akses: LIMA-12. Kesabaran dalam menghadapi proses seleksi adalah latihan terbaik untuk menghadapi dinamika dakwah yang sebenarnya di lapangan.",
+            "Kode Akses: MIKE-13. Jadilah agen perubahan digital yang tidak hanya pintar secara teknologi, tetapi juga membawa keteduhan rohani.",
+            "Kode Akses: NOVEMBER-14. Semangat membara dan senyuman tulusmu adalah energi terbaik untuk menginspirasi teman-teman di sekitarmu.",
+            "Kode Akses: ZULU-15. Status Kehormatan Tertinggi Aktif! Kamu adalah bagian penting dari generasi masa depan yang siap merangkul kemajuan dengan nilai dakwah."
+        ];
+
+        function generateBadge() {
+            const nameInput = document.getElementById('cadetName').value.trim();
+            const resultBox = document.getElementById('badgeResult');
+            const displayName = document.getElementById('displayName');
+            const badgeDesc = document.getElementById('badgeDesc');
+            const badgeTitle = document.getElementById('badgeTitle');
+
+            if(nameInput === "") {
+                alert("Silakan masukkan nama lengkapmu terlebih dahulu!");
+                return;
+            }
+
+            let charSum = 0;
+            for(let i = 0; i < nameInput.length; i++) {
+                charSum += nameInput.charCodeAt(i);
+            }
+            const selectedIndex = charSum % uniqueMotivations.length;
+
+            displayName.innerHTML = nameInput.toUpperCase();
+            badgeTitle.innerHTML = `🛡️ ID CADET: #${1000 + (charSum % 8999)}`;
+            badgeDesc.innerHTML = `Status: <strong>Official Cyber Cadet</strong><br><br><em>"${uniqueMotivations[selectedIndex]}"</em>`;
+            
+            resultBox.style.display = "block";
+        }
+
+        const modal = document.getElementById('secretModal');
+        function openSecretModal() {
+            modal.style.display = 'flex';
+        }
+        function closeSecretModal() {
+            modal.style.display = 'none';
+        }
+        window.onclick = function(e) {
+            if (e.target == modal) closeSecretModal();
+        }
+    </script>
+</body>
+</html>
