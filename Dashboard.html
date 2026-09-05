@@ -138,7 +138,7 @@
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
         }
 
-        /* Tombol Hamburger (Default Sembunyi di Desktop) */
+        /* Tombol Hamburger */
         .hamburger-btn {
             display: none;
             background: rgba(6, 182, 212, 0.1);
@@ -324,6 +324,17 @@
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
         }
 
+        /* Tombol Keluar / Bahaya */
+        .btn-cyber.danger {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        .btn-cyber.danger:hover {
+            background: var(--danger);
+            color: var(--bg-deep);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+        }
+
         #badgeResult {
             display: none;
             margin-top: 25px;
@@ -387,7 +398,6 @@
             letter-spacing: 1px;
         }
 
-        /* Responsive Media Query untuk HP */
         @media (max-width: 768px) {
             header {
                 flex-direction: row;
@@ -401,7 +411,7 @@
             }
 
             .nav-menu {
-                display: none; /* Disembunyikan dulu secara default di HP */
+                display: none;
                 flex-direction: column;
                 width: 100%;
                 background: rgba(15, 23, 42, 0.95);
@@ -414,7 +424,6 @@
                 box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
             }
 
-            /* Kelas aktif untuk menampilkan menu saat hamburger diklik */
             .nav-menu.show {
                 display: flex;
             }
@@ -449,7 +458,6 @@
             </div>
         </div>
 
-        <!-- Tombol Hamburger -->
         <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
             <i class="fa-solid fa-bars"></i>
         </button>
@@ -459,6 +467,8 @@
             <li><a href="Kejuaraan.html"><i class="fa-solid fa-bullhorn"></i> Pengumuman</a></li>
             <li><a href="Video.html"><i class="fa-solid fa-photo-film"></i> Galeri Media</a></li>
             <li><a href="radar.html"><i class="fa-solid fa-satellite-dish"></i> Radar</a></li>
+            <!-- Tombol Keluar di dalam Menu Navigasi HP/Desktop -->
+            <li><a href="index.html" style="border-color: var(--danger); color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a></li>
         </ul>
     </header>
 
@@ -489,6 +499,13 @@
                         <h3>Kejutan Sistem</h3>
                         <p>Buka pesan khusus dari AI Command Center untuk melejitkan bahagiamu.</p>
                     </div>
+                </div>
+
+                <!-- Tambahan Tombol Keluar di bawah kartu Beranda -->
+                <div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; justify-content: flex-end;">
+                    <a href="index.html" class="btn-cyber danger">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar / Kembali ke Index
+                    </a>
                 </div>
             </div>
         </section>
@@ -567,9 +584,15 @@
         <div class="modal-box">
             <h3>🎉 SELAMAT, KAMU SPESIAL! 🎉</h3>
             <p>Apapun hasil seleksi resmi nanti (Lulus atau Tidak), ingatlah bahwa **proses belajar tidak pernah punya batas kampus**. Kamu sudah menjadi pemenang karena mau mendaftar dan peduli pada umat. Tetap senyum, tetap semangat, dan sebarkan kebahagiaan ke sekitarmu!</p>
-            <button class="btn-cyber" onclick="closeSecretModal()" style="width: 100%; justify-content: center;">
-                MENGERTI // SIAP BAHAGIA SELALU
-            </button>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn-cyber" onclick="closeSecretModal()" style="width: 100%; justify-content: center;">
+                    MENGERTI // SIAP BAHAGIA SELALU
+                </button>
+                <a href="index.html" class="btn-cyber danger" style="width: 100%; justify-content: center;">
+                    <i class="fa-solid fa-right-from-bracket"></i> KELUAR KE INDEX.HTML
+                </a>
+            </div>
         </div>
     </div>
 
@@ -578,13 +601,11 @@
     </footer>
 
     <script>
-        // Fungsi Toggle Menu Hamburger di HP
         function toggleMenu() {
             const navMenu = document.getElementById('navMenu');
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             navMenu.classList.toggle('show');
             
-            // Ubah ikon hamburger menjadi tanda silang (X) saat dibuka dan sebaliknya
             const icon = hamburgerBtn.querySelector('i');
             if (navMenu.classList.contains('show')) {
                 icon.classList.remove('fa-bars');
@@ -602,7 +623,6 @@
             document.getElementById(tabId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Otomatis tutup menu jika diklik di HP
             const navMenu = document.getElementById('navMenu');
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             if (navMenu.classList.contains('show')) {
