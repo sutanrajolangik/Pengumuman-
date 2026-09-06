@@ -115,6 +115,10 @@
             align-items: center;
         }
 
+        .nav-menu li {
+            position: relative;
+        }
+
         .nav-menu a {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -136,6 +140,51 @@
             color: var(--bg-deep);
             border-color: var(--primary);
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Styling untuk Dropdown / Submenu Galeri Media */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            list-style: none;
+            padding: 8px 0;
+            min-width: 160px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+
+        .dropdown-menu li {
+            width: 100%;
+        }
+
+        .dropdown-menu a {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            border: none !important;
+            background: transparent !important;
+            display: flex;
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--primary) !important;
+            color: var(--bg-deep) !important;
+            box-shadow: none !important;
+        }
+
+        /* Munculkan dropdown saat kursor diarahkan (untuk desktop) */
+        @media (min-width: 769px) {
+            .nav-menu li.has-dropdown:hover .dropdown-menu {
+                display: block;
+                animation: fadeIn 0.3s ease-in-out;
+            }
         }
 
         /* Tombol Hamburger */
@@ -324,7 +373,6 @@
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
         }
 
-        /* Tombol Keluar / Bahaya */
         .btn-cyber.danger {
             border-color: var(--danger);
             color: var(--danger);
@@ -438,6 +486,17 @@
                 padding: 12px 16px;
             }
 
+            /* Penyesuaian Dropdown di Mobile */
+            .nav-menu .has-dropdown .dropdown-menu {
+                position: static;
+                display: block;
+                box-shadow: none;
+                border: none;
+                background: rgba(255, 255, 255, 0.02);
+                padding-left: 15px;
+                margin-top: 5px;
+            }
+
             h1 { font-size: 1.6rem; }
             .cyber-card { padding: 25px 20px; }
         }
@@ -465,9 +524,20 @@
         <ul class="nav-menu" id="navMenu">
             <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i> Beranda</a></li>
             <li><a href="Kejuaraan.html"><i class="fa-solid fa-bullhorn"></i> Pengumuman</a></li>
-            <li><a href="Video.html"><i class="fa-solid fa-photo-film"></i> Galeri Media</a></li>
+            
+            <!-- Menu Galeri Media dengan Submenu I'tikaf & LDKS -->
+            <li class="has-dropdown">
+                <a href="Video.html">
+                    <i class="fa-solid fa-photo-film"></i> Galeri Media 
+                    <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: auto;"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="itikaf.html"><i class="fa-solid fa-mosque"></i> I'tikaf</a></li>
+                    <li><a href="ldks.html"><i class="fa-solid fa-users-rectangle"></i> LDKS</a></li>
+                </ul>
+            </li>
+
             <li><a href="radar.html"><i class="fa-solid fa-satellite-dish"></i> Radar</a></li>
-            <!-- Tombol Keluar di dalam Menu Navigasi HP/Desktop -->
             <li><a href="index.html" style="border-color: var(--danger); color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a></li>
         </ul>
     </header>
@@ -501,7 +571,6 @@
                     </div>
                 </div>
 
-                <!-- Tambahan Tombol Keluar di bawah kartu Beranda -->
                 <div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; justify-content: flex-end;">
                     <a href="index.html" class="btn-cyber danger">
                         <i class="fa-solid fa-right-from-bracket"></i> Keluar / Kembali ke Index
