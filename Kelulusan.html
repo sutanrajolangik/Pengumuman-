@@ -13,9 +13,9 @@
             --surface: #0b1329;
             --surface-glass: rgba(11, 19, 41, 0.85);
             --primary: #38bdf8;
-            --secondary: #34d399;
-            --accent: #fbbf24;
-            --danger: #f87171;
+            --secondary: #34d399; /* Hijau >= 80 */
+            --accent: #fbbf24;    /* Kuning 75 - 79.9 */
+            --danger: #f87171;    /* Merah <= 74 */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-glow: rgba(56, 189, 248, 0.4);
@@ -40,7 +40,6 @@
             position: relative;
         }
 
-        /* Latar Belakang Grid & Efek Scanlines */
         .cyber-grid {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -72,7 +71,6 @@
             pointer-events: none;
         }
 
-        /* Header / Navbar */
         header {
             background: var(--surface-glass);
             backdrop-filter: blur(15px);
@@ -113,10 +111,9 @@
             flex-wrap: wrap;
         }
 
-        /* Konten Utama */
         main {
             flex: 1;
-            max-width: 800px;
+            max-width: 850px;
             width: 100%;
             margin: 0 auto;
             padding: 50px 20px;
@@ -237,13 +234,13 @@
             letter-spacing: 0.5px;
         }
 
-        /* Area Hasil Kelulusan */
         .result-container {
             display: none;
             margin-top: 35px;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             animation: fadeInResult 0.5s ease-in-out;
+            text-align: left;
         }
 
         @keyframes fadeInResult {
@@ -258,17 +255,10 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Varian Warna Status */
         .result-status-box.passed {
             background: rgba(52, 211, 153, 0.1);
             border: 2px solid var(--secondary);
             box-shadow: 0 0 30px rgba(52, 211, 153, 0.2);
-        }
-
-        .result-status-box.conditional {
-            background: rgba(251, 191, 36, 0.1);
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
         }
 
         .result-status-box.failed {
@@ -277,23 +267,27 @@
             box-shadow: 0 0 30px rgba(248, 113, 113, 0.2);
         }
 
+        .result-status-box.warning {
+            background: rgba(251, 191, 36, 0.1);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+        }
+
         .result-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.3rem;
             font-weight: 900;
             margin-bottom: 8px;
         }
-
         .passed .result-title { color: var(--secondary); text-shadow: 0 0 10px rgba(52, 211, 153, 0.5); }
-        .conditional .result-title { color: var(--accent); text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
         .failed .result-title { color: var(--danger); text-shadow: 0 0 10px rgba(248, 113, 113, 0.5); }
+        .warning .result-title { color: var(--accent); text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
 
         .participant-details {
             font-size: 0.9rem;
             color: var(--text-main);
             margin-bottom: 15px;
             line-height: 1.6;
-            text-align: left;
             background: rgba(2, 6, 23, 0.4);
             padding: 12px;
             border-radius: 8px;
@@ -326,6 +320,126 @@
             color: var(--bg-deep);
             box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
         }
+
+        /* Gaya Khusus Bagian Rekomendasi Beasiswa Alternatif (Satu Saja) */
+        .scholarship-box {
+            margin-top: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px dashed var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .scholarship-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .scholarship-box p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .scholarship-card-single {
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            max-width: 320px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .scholarship-card-single img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .scholarship-card-single h4 {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .scholarship-card-single span {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .scholarship-link {
+            display: block;
+            text-align: center;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            font-size: 0.78rem;
+            font-family: 'Orbitron', sans-serif;
+            padding: 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .scholarship-link:hover {
+            background: var(--primary);
+            color: var(--bg-deep);
+        }
+
+        .test-history-section {
+            margin-top: 20px;
+            background: rgba(2, 6, 23, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .test-history-section h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .test-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .test-table th, .test-table td {
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .test-table th {
+            color: var(--text-muted);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .test-table td span.score-badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .score-pass { background: rgba(52, 211, 153, 0.2); color: var(--secondary); }
+        .score-cond { background: rgba(251, 191, 36, 0.2); color: var(--accent); }
+        .score-fail { background: rgba(248, 113, 113, 0.2); color: var(--danger); }
 
         .action-area {
             text-align: center;
@@ -375,7 +489,6 @@
 
     <header>
         <div class="logo">
-            <!-- Ubah src="logo.png" sesuai lokasi dan nama file logo Anda -->
             <img src="aset/Pp Mabit.png" alt="Logo PKD"> 
             PKD VERIFICATION SYSTEM
         </div>
@@ -389,24 +502,41 @@
             <p>Masukkan Nama Lengkap atau Nama Panggilan Anda untuk memverifikasi status kelulusan secara instan.</p>
 
             <div class="input-group">
-                <input type="text" id="participantName" placeholder="CONTOH: Reyan / Salwa" autocomplete="off" onkeypress="handleKeyPress(event)">
+                <input type="text" id="participantName" placeholder="CONTOH: Salwa / Zulhan" autocomplete="off" onkeypress="handleKeyPress(event)">
                 <button class="btn-verify" onclick="checkStatus()">
                     <i class="fa-solid fa-magnifying-glass"></i> CEK STATUS
                 </button>
             </div>
-            <div class="hint-text">💡 Tips: Anda cukup mengetikkan **nama depan/panggilan** (Cth: <b style="color:var(--accent);">Reyan</b>)</div>
+            <div class="hint-text">💡 Tips: Anda cukup mengetikkan **nama depan/panggilan** (Cth: <b style="color:var(--accent);">Zulhan</b>)</div>
 
-            <!-- AREA HASIL VERIFIKASI -->
             <div class="result-container" id="resultContainer">
-                <div class="result-status-box" id="statusBox">
-                    <div class="result-title" id="resultTitle">STATUS KELULUSAN</div>
+                <div class="result-status-box passed" id="statusBox">
+                    <div class="result-title" id="resultTitle"><i class="fa-solid fa-circle-check"></i> STATUS: LULUS (VERIFIED)</div>
                     <div class="participant-details" id="resultDetails">
                         Nama: <span id="resName">-</span><br>
                         Nomor Peserta: <span id="resId">-</span><br>
-                        Kelompok Komando: <span id="resGroup">-</span>
+                        Program Studi: <span id="resProdi">-</span><br>
+                        Asal Sekolah: <span id="resSchool">-</span>
                     </div>
                     <div id="actionAreaExtra"></div>
                 </div>
+
+                <div class="test-history-section">
+                    <h4><i class="fa-solid fa-file-shield"></i> REKAPITULASI PENILAIAN (STANDAR KELULUSAN TEPAT)</h4>
+                    <table class="test-table">
+                        <thead>
+                            <tr>
+                                <th>Kategori Penilaian</th>
+                                <th>Skor / Hasil</th>
+                            </tr>
+                        </thead>
+                        <tbody id="testHistoryBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Bagian Informasi Khusus Peserta Tidak Lolos -->
+                <div id="notPassedExtraContainer" style="display: none;"></div>
             </div>
         </div>
 
@@ -473,36 +603,48 @@
             }
         }
 
-        // DATABASE PESERTA
         const databasePeserta = [
-            { name: "M. Reyanullah", id: "PKD-2026-001", group: "Thalhah bin Ubaidillah", status: "passed", message: "Selamat! Anda dinyatakan LULUS dengan predikat Istimewa." },
-            { name: "Rizki Al-Muiz", id: "PKD-2026-002", group: "Kelompok 01", status: "passed", message: "Selamat! Anda dinyatakan LULUS penuh." },
-            { name: "Najmi Syahru Shiyam", id: "PKD-2026-003", group: "Ukasyah bin Mihshan ", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Shohibul Wafi", id: "PKD-2026-004", group: "Sa'ad bin Mu'adz", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Shohibul Wafa", id: "PKD-2026-005", group: "Thalhah bin Ubaidillah", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Arif Faturrahman", id: "PKD-2026-006", group: "Thalhah bin Ubaidillah", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "M. Tiyas Syarifatulllah", id: "PKD-2026-007", group: "Sa'ad bin Mu'adz", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Titan Nibras S.", id: "PKD-2026-008", group: "Sa'ad bin Mu'adz", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Salwa", id: "PKD-2026-009", group: "Hamnah binti Jahsy", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Mufhiyatus Sa'adah", id: "PKD-2026-010", group: "Hamnah binti Jahsy", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Rodini Putri Zamroni", id: "PKD-2026-011", group: "Nusaibah binti Ka'ab", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Kayla Nur Azizah", id: "PKD-2026-012", group: "Nusaibah binti Ka'ab", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Silvi Awalia Gumilar", id: "PKD-2026-013", group: "Hamnah binti Jahsy", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Rahma Zahwa", id: "PKD-2026-014", group: "Nusaibah binti Ka'ab", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Siti Nuravni", id: "PKD-2026-015", group: "Shafiyyah binti Abdul Muthalib", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Agis Nur Zahra", id: "PKD-2026-016", group: "Shafiyyah binti Abdul Muthalib", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Nur Luthfi Azzahra", id: "PKD-2026-017", group: "Shafiyyah binti Abdul Muthalib", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Gazella Azharina J.", id: "PKD-2026-018", group: "Hamnah binti Jahsy", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Laura Adelsia", id: "PKD-2026-019", group: "Shafiyyah binti Abdul Muthalib", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "Siti Chairun Nisa", id: "PKD-2026-020", group: "Kelompok 07", status: "passed", message: "Selamat! Anda dinyatakan LULUS." },
-            { name: "M. Firdan", id: "PKD-2026-021", group: "Thalhah bin Ubaidillah", status: "conditional", message: "Anda dinyatakan LULUS BERSYARAT. Harap melengkapi tugas susulan." },
-            { name: "Mohamad Rizki S.", id: "PKD-2026-022", group: "Sa'ad bin Mu'adz", status: "conditional", message: "Anda dinyatakan LULUS BERSYARAT. Harap melengkapi tugas susulan." },
-            { name: "Galang Permana", id: "PKD-2026-023", group: "Ukasyah bin Mihshan ", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." },
-            { name: "Fathi Aji", id: "PKD-2026-024", group: "Ukasyah bin Mihshan ", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." },
-            { name: "Tengku Muhammad Amar", id: "PKD-2026-025", group: "Ukasyah bin Mihshan ", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." },
-            { name: "Fauzul Akbar", id: "PKD-2026-026", group: "Thalhah bin Ubaidillah", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." },
-            { name: "Zulhan Yahya", id: "PKD-2026-027", group: "Sa'ad bin Mu'adz", status: "failed", message: "Mohon maaf, Anda belum memenuhi syarat kelulusan tahun ini." }
+            // List Utama / Standar
+            { name: "Kayla Nurazizah", id: "PKD-2026-001", prodi: "Pendidikan Guru Sekolah Dasar", school: "MAS El Zahira", tpa: 67, tahfidz: 77, kepesantrenan: 77.3, itikaf: 78.8, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Arif Faturrohman", id: "PKD-2026-003", prodi: "Manajemen Pendidikan Islam", school: "Madrasah Aliyah Swasta Al-Furqoniyah", tpa: 85, tahfidz: 68, kepesantrenan: 79, itikaf: 83.3, psikotes: "Dipetimbangkan", status: "LULUS" },
+            { name: "Nur Luthfi Azzahra", id: "PKD-2026-27", prodi: "Manajemen Pendidikan Islam", school: "MAS Al Ma'rifah", tpa: 64, tahfidz: 78, kepesantrenan: 77, itikaf: 76.8, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Salwa", id: "PKD-2026-005", prodi: "Pendidikan Bahasa Arab", school: "SMAN 1 Paralansalak", tpa: 85, tahfidz: 80, kepesantrenan: 85.7, itikaf: 88.8, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Najmi Syahru Shiyam", id: "PKD-2026-006", prodi: "Pendidikan Bahasa Arab", school: "SMAN 1 Cicurug", tpa: 70, tahfidz: 77, kepesantrenan: 81.7, itikaf: 83.8, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Silvi Awalia Gumilar", id: "PKD-2026-026", prodi: "Manajemen Pendidikan Islam", school: "Pondok Pesantren Hamalatul Qur'an Al-Falakiyah", tpa: 79, tahfidz: 82, kepesantrenan: 81.3, itikaf: 73.8, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Galang Permana", id: "PKD-2026-011", prodi: "Ekonomi Syariah", school: "MA Al Firdaus", tpa: 76, tahfidz: 80, kepesantrenan: 78.5, itikaf: 52.5, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Teungku Muhammad Amar Al Muharram", id: "PKD-2026-013", prodi: "Manajemen", school: "MA Al-Firdaus", tpa: 73, tahfidz: 71, kepesantrenan: 76.2, itikaf: 51.3, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Fauzul Akbar", id: "PKD-2026-014", prodi: "Manajemen", school: "MA Al Firdaus", tpa: 64, tahfidz: 80, kepesantrenan: 75.2, itikaf: 51.3, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Muhammad Tyas Syarifatullah", id: "PKD-2026-015", prodi: "Manajemen", school: "MA Al Firdaus", tpa: 61, tahfidz: 75, kepesantrenan: 76.1, itikaf: 80, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Muthia Az-Zahra", id: "PKD-2026-011", prodi: "Akuntansi", school: "SMA Negeri 1 Bogor", tpa: 80, tahfidz: 80, kepesantrenan: 80, itikaf: 80, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Laura Adelsia", id: "PKD-2026-017", prodi: "Hukum", school: "Pesantren al hafizh bogor", tpa: 79, tahfidz: 74, kepesantrenan: 81.4, itikaf: 83.8, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Mufhiyatus Sa'aadah", id: "PKD-2026-018", prodi: "Agroteknologi", school: "SMA Al-Hadiid", tpa: 79, tahfidz: 71, kepesantrenan: 75.2, itikaf: 83.8, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Muhammad Reyanullah M", id: "PKD-2026-019", prodi: "Agroteknologi", school: "SMAN 1 Cicurug", tpa: 76, tahfidz: 74, kepesantrenan: 75.5, itikaf: 87.5, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Fathi Aji", id: "PKD-2026-020", prodi: "Agroteknologi", school: "SMA Nurul Fajri", tpa: 61, tahfidz: 71, kepesantrenan: 79.9, itikaf: 47.5, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Mohamad Rizky S", id: "PKD-2026-021", prodi: "Peternakan", school: "MAS Nurul Hikmah", tpa: 76, tahfidz: 76, kepesantrenan: 78.8, itikaf: 77.5, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Titan Nibras Sayyafurrahman", id: "PKD-2026-022", prodi: "Peternakan", school: "SMKS Cahaya Bangsa", tpa: 55, tahfidz: 82, kepesantrenan: 82.1, itikaf: 77.5, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Rodini Putri Zamroni", id: "PKD-2026-023", prodi: "Ilmu Komputer", school: "Pondok Modern Darussalam Gontor", tpa: 82, tahfidz: 74, kepesantrenan: 81.3, itikaf: 83.8, psikotes: "Rekomendasi", status: "LULUS" },
+            { name: "Muhamad Firdan", id: "PKD-2026-024", prodi: "Ilmu Komputer", school: "SMK Amaliah 1 Ciawi", tpa: 70, tahfidz: 75, kepesantrenan: 69.7, itikaf: 76.3, psikotes: "Rekomendasi", status: "LULUS" },
+
+            // Yang Dipanggil / Wawancara Khusus
+            { name: "M. Rizki Al Muiz", id: "PKD-2026-002", prodi: "Manajemen Pendidikan Islam", school: "SMK Al Watasi", tpa: 64, tahfidz: 77, kepesantrenan: 79.3, itikaf: 86.3, psikotes: "Tidak Rekomendasi", status: "DIPANGGIL / WAWANCARA KHUSUS" },
+            { name: "Siti Nuravni", id: "PKD-2026-004", prodi: "Manajemen Pendidikan Islam", school: "MAS. Nurul Islam", tpa: 82, tahfidz: 66, kepesantrenan: 81.3, itikaf: 78.8, psikotes: "Dipetimbangkan", status: "DIPANGGIL / WAWANCARA KHUSUS" },
+            { name: "Siti Chairunnisa", id: "PKD-2026-007", prodi: "Pendidikan Bahasa Arab", school: "MAS Darul Hufadh", tpa: 70, tahfidz: 66, kepesantrenan: 83.6, itikaf: 82.5, psikotes: "Dipetimbangkan", status: "DIPANGGIL / WAWANCARA KHUSUS" },
+            { name: "Agis Nur Zahra", id: "PKD-2026-008", prodi: "Pendidikan Bahasa Arab", school: "MA Al Firdaus", tpa: 64, tahfidz: 71, kepesantrenan: 77.3, itikaf: 78.8, psikotes: "Dipetimbangkan", status: "DIPANGGIL / WAWANCARA KHUSUS" },
+            { name: "Shohibul Wafa Tajul Arifin", id: "PKD-2026-009", prodi: "Pendidikan Agama Islam", school: "MAS Ulumuddin Susukan Cirebon", tpa: 61, tahfidz: 82, kepesantrenan: 80.5, itikaf: 85, psikotes: "Tidak Rekomendasi", status: "DIPANGGIL / WAWANCARA KHUSUS" },
+            { name: "Shohibul Wafi Tajul Arifin", id: "PKD-2026-010", prodi: "Pendidikan Agama Islam", school: "MAS Ulumuddin Susukan Cirebon", tpa: 58, tahfidz: 73, kepesantrenan: 79.8, itikaf: 83.8, psikotes: "Tidak Rekomendasi", status: "DIPANGGIL / WAWANCARA KHUSUS" },
+
+            // Yang Tidak Lolos
+            { name: "Zulhan Yahya", id: "PKD-2026-025", prodi: "Peternakan", school: "SMAIT Tebuireng 4 Al Ishlah Riau", tpa: 40, tahfidz: 50, kepesantrenan: 60, itikaf: 46.3, psikotes: "Tidak Rekomendasi", status: "TIDAK LULUS" },
+            { name: "Rahma Zahwa", id: "PKD-2026-016", prodi: "Administrasi Publik", school: "SMK Bakti Kusumah", tpa: 76, tahfidz: 71, kepesantrenan: 80.1, itikaf: 81.3, psikotes: "Tidak Rekomendasi", status: "TIDAK LULUS" },
+            { name: "Gazella Azharina Jawalani", id: "PKD-2026-012", prodi: "Ekonomi Syariah", school: "MA Al-Firdaus", tpa: 58, tahfidz: 82, kepesantrenan: 79.3, itikaf: 73.8, psikotes: "Tidak Rekomendasi", status: "TIDAK LULUS" }
         ];
+
+        function getScoreClass(score) {
+            let num = parseFloat(score);
+            if (num >= 80) return 'score-pass';
+            if (num >= 75) return 'score-cond';
+            return 'score-fail';
+        }
 
         function checkStatus() {
             playClickSound();
@@ -512,8 +654,15 @@
             const resultTitle = document.getElementById('resultTitle');
             const resName = document.getElementById('resName');
             const resId = document.getElementById('resId');
-            const resGroup = document.getElementById('resGroup');
+            const resProdi = document.getElementById('resProdi');
+            const resSchool = document.getElementById('resSchool');
             const actionAreaExtra = document.getElementById('actionAreaExtra');
+            const testHistoryBody = document.getElementById('testHistoryBody');
+            const notPassedContainer = document.getElementById('notPassedExtraContainer');
+
+            testHistoryBody.innerHTML = "";
+            notPassedContainer.innerHTML = "";
+            notPassedContainer.style.display = "none";
 
             if (!inputVal) {
                 alert("Harap masukkan Nama terlebih dahulu!");
@@ -522,47 +671,77 @@
 
             resultContainer.style.display = 'block';
 
-            let data = databasePeserta.find(p => p.name.toLowerCase().includes(inputVal));
+            let data = databasePeserta.find(p => p.name.toLowerCase() === inputVal || p.name.toLowerCase().startsWith(inputVal));
+            
+            if (!data) {
+                data = databasePeserta.find(p => p.name.toLowerCase().includes(inputVal));
+            }
             
             if (!data) {
                 statusBox.className = "result-status-box failed";
                 resultTitle.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> NAMA TIDAK DITEMUKAN';
                 resName.innerText = document.getElementById('participantName').value;
                 resId.innerText = "-";
-                resGroup.innerText = "-";
-                actionAreaExtra.innerHTML = `<p style="color:var(--danger); margin-top:15px; font-weight:600;">Nama tidak terdaftar. Pastikan ejaan nama atau panggilan Anda benar.</p>`;
+                resProdi.innerText = "-";
+                resSchool.innerText = "-";
+                actionAreaExtra.innerHTML = `<p style="color:var(--danger); margin-top:15px; font-weight:600;">Nama tidak terdaftar di sistem. Periksa kembali ejaan nama Anda.</p>`;
                 return;
             }
 
+            playSuccessSound();
             resName.innerText = data.name;
             resId.innerText = data.id;
-            resGroup.innerText = data.group;
+            resProdi.innerText = data.prodi;
+            resSchool.innerText = data.school;
 
-            if (data.status === "passed") {
-                playSuccessSound();
+            let historyHTML = `
+                <tr><td>TPA</td><td><span class="score-badge ${getScoreClass(data.tpa)}">${data.tpa}</span></td></tr>
+                <tr><td>Tahfidz</td><td><span class="score-badge ${getScoreClass(data.tahfidz)}">${data.tahfidz}</span></td></tr>
+                <tr><td>Kepesantrenan</td><td><span class="score-badge ${getScoreClass(data.kepesantrenan)}">${data.kepesantrenan}</span></td></tr>
+                <tr><td>I'tikaf</td><td><span class="score-badge ${getScoreClass(data.itikaf)}">${data.itikaf}</span></td></tr>
+                <tr><td>Psikotes</td><td><span class="score-badge ${data.psikotes === 'Rekomendasi' ? 'score-pass' : 'score-cond'}">${data.psikotes}</span></td></tr>
+            `;
+            testHistoryBody.innerHTML = historyHTML;
+
+            if (data.status === "LULUS") {
                 statusBox.className = "result-status-box passed";
                 resultTitle.innerHTML = '<i class="fa-solid fa-circle-check"></i> STATUS: LULUS (VERIFIED)';
                 actionAreaExtra.innerHTML = `
-                    <p style="color:var(--secondary); margin-bottom:15px; font-weight:600;">${data.message}</p>
+                    <p style="color:var(--secondary); margin-bottom:15px; font-weight:600;">Selamat! Anda dinyatakan LULUS seleksi.</p>
                     <a href="https://drive.google.com" target="_blank" class="certificate-download-btn">
                         <i class="fa-solid fa-download"></i> DOWNLOAD SK KELULUSAN & SERTIFIKAT
                     </a>
                 `;
-            } else if (data.status === "conditional") {
-                playSuccessSound();
-                statusBox.className = "result-status-box conditional";
-                resultTitle.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> STATUS: LULUS BERSYARAT';
+            } else if (data.status === "DIPANGGIL / WAWANCARA KHUSUS") {
+                statusBox.className = "result-status-box warning";
+                resultTitle.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> STATUS: DIPANGGIL (WAWANCARA KHUSUS)';
                 actionAreaExtra.innerHTML = `
-                    <p style="color:var(--accent); margin-bottom:15px; font-weight:600;">${data.message}</p>
-                    <a href="https://drive.google.com" target="_blank" class="certificate-download-btn" style="color:var(--accent); border-color:var(--accent);">
-                        <i class="fa-solid fa-file-lines"></i> LIHAT INSTRUKSI KETENTUAN BERSYARAT
-                    </a>
+                    <p style="color:var(--accent); margin-bottom:15px; font-weight:600;">Anda masuk dalam daftar peserta yang dipanggil untuk evaluasi/wawancara lanjutan.</p>
                 `;
             } else {
                 statusBox.className = "result-status-box failed";
                 resultTitle.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> STATUS: BELUM LULUS';
                 actionAreaExtra.innerHTML = `
-                    <p style="color:var(--danger); margin-top:15px; font-weight:600;">${data.message}</p>
+                    <p style="color:var(--danger); margin-bottom:15px; font-weight:600;">Mohon maaf, berdasarkan hasil peninjauan mendalam, Anda dinyatakan belum lolos pada periode ini.</p>
+                `;
+
+                // Tampilkan info penyemangat dan 1 rekomendasi beasiswa alternatif
+                notPassedContainer.style.display = "block";
+                notPassedContainer.innerHTML = `
+                    <div class="scholarship-box">
+                        <h3><i class="fa-solid fa-heart-pulse" style="color: var(--primary);"></i> Jangan Sedih & Berkecil Hati!</h3>
+                        <p>Kegagalan hari ini adalah awal dari kesuksesan yang tertunda. Yuk, tetap semangat dan jelajahi peluang beasiswa menarik lainnya!</p>
+                        <div class="scholarship-card-single">
+                            <div>
+                                <img src="https://drive.google.com/thumbnail?id=1C_w7MalhAakicXcAi4vOUoQg1hQQLgKc&sz=w2000" alt="Beasiswa Program Khusus">
+                                <h4>Beasiswa Program Khusus</h4>
+                                <span>Belum beruntung di KIP-K dan beasiswa PKD UNIDA Tahun Akademik 2026/2027? Perjuangan kuliahmu belum selesai di sini!</span>
+                            </div>
+                            <a href="https://wa.me/6285218621311?text=Halo%20Admin,%20saya%20${encodeURIComponent(data.name)}%20ingin%20berkonsultasi%20mengenai%20Beasiswa%20Program%20Khusus%20setelah%20belum%20beruntung%20di%20seleksi%20PKD%20UNIDA%202026." target="_blank" class="scholarship-link">
+                                <i class="fa-brands fa-whatsapp fa-lg"></i> Konsultasi via WhatsApp
+                            </a>
+                        </div>
+                    </div>
                 `;
             }
         }
